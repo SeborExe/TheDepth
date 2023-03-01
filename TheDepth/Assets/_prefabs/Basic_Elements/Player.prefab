@@ -44,10 +44,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.4
-  m_Speed: 7
-  m_Acceleration: 10
+  m_Speed: 5.66
+  m_Acceleration: 16
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 2000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2904510673b717a44a7618e1f513388b, type: 2}
+    - target: {fileID: 9566420, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 880858dfd9b1e784e89d45242bf78d2b, type: 3}
 --- !u!4 &5655154949207138375 stripped
@@ -151,3 +155,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5655154949207609609}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5655154949207469349 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 162860, guid: 880858dfd9b1e784e89d45242bf78d2b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5655154949207609609}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1593516148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154949207469349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a792852dcdea4d64080d2fc74e02fdea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

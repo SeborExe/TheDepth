@@ -7,7 +7,7 @@ public class PlayerAnimator : MonoBehaviour
     private Animator animator;
     private Mover playerMover;
 
-    //private const string IS_WALKING = "IsWalking";
+    private const string FORWARD_SPEED = "forwardSpeed";
 
     private void Awake()
     {
@@ -17,6 +17,6 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        //animator.SetBool(IS_WALKING, playerMover.IsWalking());
+        animator.SetFloat(FORWARD_SPEED, playerMover.speed);
     }
 }

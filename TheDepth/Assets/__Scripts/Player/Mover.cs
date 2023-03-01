@@ -8,6 +8,8 @@ public class Mover : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
 
+    public float speed { get; private set; }
+
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -19,6 +21,8 @@ public class Mover : MonoBehaviour
         {
             MoveToCursor();
         }
+
+        GetPlayerLocomotionParameters();
     }
 
     private void MoveToCursor()
@@ -29,5 +33,12 @@ public class Mover : MonoBehaviour
         {
             navMeshAgent.destination = hit.point;
         }
+    }
+
+    private void GetPlayerLocomotionParameters()
+    {
+        Vector3 velocity = navMeshAgent.velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity);
+        speed = localVelocity.z;
     }
 }

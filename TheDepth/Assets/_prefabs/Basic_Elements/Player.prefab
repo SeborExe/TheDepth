@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1406225323254622225}
   - component: {fileID: 1875775176528269684}
   - component: {fileID: 5655154948495891507}
+  - component: {fileID: 2992686034631846478}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -115,6 +116,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e97140861abd29b43b557db58ccf47ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isKeyboardMovementEnabled: 1
+--- !u!114 &2992686034631846478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154948495891506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fde492ba86925143b5835d2b845b3f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5655154949207609609

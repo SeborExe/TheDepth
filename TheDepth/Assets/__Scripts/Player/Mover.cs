@@ -10,49 +10,20 @@ using static UnityEditor.Searcher.SearcherWindow.Alignment;
 public class Mover : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
-    private PlayerInput playerInput;
-    private PlayerInputActions playerInputActions;
     private PlayerAnimator playerAnimator;
     private Transform mainCamera;
+    private InputHandler inputHandler;
 
     [SerializeField] private bool isKeyboardMovementEnabled;
 
     public float speed { get; private set; }
-    public float zoomValue { get; private set; }
 
     private void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
-        playerInput = GetComponent<PlayerInput>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
         mainCamera = Camera.main.transform;
-        
-        playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.ZoomIn.performed += ZoomIn_performed;
-        playerInputActions.Player.ZoomIn.canceled += ZoomIn_canceled;
-        playerInputActions.Player.ZoomOut.performed += ZoomOut_performed;
-        playerInputActions.Player.ZoomOut.canceled += ZoomOut_canceled;
-        playerInputActions.Enable();
-    }
-
-    private void ZoomOut_canceled(InputAction.CallbackContext callback)
-    {
-        zoomValue = 0f;
-    }
-
-    private void ZoomIn_canceled(InputAction.CallbackContext callback)
-    {
-        zoomValue = 0f;
-    }
-
-    private void ZoomOut_performed(InputAction.CallbackContext callback)
-    {
-        zoomValue = 1f;
-    }
-
-    private void ZoomIn_performed(InputAction.CallbackContext callback)
-    {
-        zoomValue = -1f;
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void Update()
@@ -60,6 +31,7 @@ public class Mover : MonoBehaviour
         if (isKeyboardMovementEnabled)
         {
             Move();
+            inputHandler.SetLookRotation();
             navMeshAgent.ResetPath();
         }
         else
@@ -71,18 +43,6 @@ public class Mover : MonoBehaviour
 
             GetPlayerLocomotionParameters();
         }
-    }
-
-    public Vector2 GetMovementVectorNormalized()
-    {
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-        return inputVector;
-    }
-
-    public Vector2 GetLookRotation()
-    {
-        Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
-        return inputVector;
     }
 
     private void MoveToCursor()
@@ -104,7 +64,7 @@ public class Mover : MonoBehaviour
 
     private void Move()
     {
-        Vector2 inputVector = GetMovementVectorNormalized();
+        Vector2 inputVector = inputHandler.GetMovementVectorNormalized();
         Vector3 moveDir;
         moveDir = mainCamera.forward * inputVector.y;
         moveDir += mainCamera.right * inputVector.x;

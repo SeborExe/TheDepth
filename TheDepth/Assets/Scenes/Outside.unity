@@ -650,6 +650,10 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.43268526
       objectReference: {fileID: 0}
+    - target: {fileID: 1621465962, guid: ac21164435c733a45996e957ba2793ac, type: 3}
+      propertyPath: gamepadRotateSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     - target: {fileID: 1621465963, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_Follow
       value: 
@@ -660,15 +664,15 @@ PrefabInstance:
       objectReference: {fileID: 986509312}
     - target: {fileID: 1936878077, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.40745115
+      value: 0.40745118
       objectReference: {fileID: 0}
     - target: {fileID: 1936878077, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.19318211
+      value: 0.19318214
       objectReference: {fileID: 0}
     - target: {fileID: 1936878077, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.80650365
+      value: 0.8065036
       objectReference: {fileID: 0}
     - target: {fileID: 6964787581071229558, guid: ac21164435c733a45996e957ba2793ac,
         type: 3}
@@ -939,6 +943,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5655154948495891507, guid: c504d792e1daef34dae2415bf1617cdd,
+        type: 3}
+      propertyPath: isKeyboardMovementEnabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}

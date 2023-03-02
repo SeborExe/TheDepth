@@ -19,4 +19,9 @@ public class PlayerAnimator : MonoBehaviour
     {
         animator.SetFloat(FORWARD_SPEED, playerMover.speed);
     }
+
+    public void UpdatePlayerMoveAnimation(float speed)
+    {
+        animator.SetFloat(FORWARD_SPEED, speed);
+    }
 }

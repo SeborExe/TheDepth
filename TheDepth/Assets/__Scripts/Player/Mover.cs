@@ -36,23 +36,13 @@ public class Mover : MonoBehaviour
         }
         else
         {
-            if (Input.GetMouseButton(0))
-            {
-                MoveToCursor();
-            }
-
             GetPlayerLocomotionParameters();
         }
     }
 
-    private void MoveToCursor()
+    public void MoveTo(Vector3 destination)
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        bool hasHit = Physics.Raycast(ray, out RaycastHit hit);
-        if (hasHit)
-        {
-            navMeshAgent.destination = hit.point;
-        }
+        navMeshAgent.destination = destination;
     }
 
     private void GetPlayerLocomotionParameters()

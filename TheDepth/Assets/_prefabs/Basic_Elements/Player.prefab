@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5655154948495885261}
   - component: {fileID: 1406225323254622225}
   - component: {fileID: 1875775176528269684}
+  - component: {fileID: 3049669286339938403}
   - component: {fileID: 5655154948495891507}
   - component: {fileID: 2992686034631846478}
   m_Layer: 0
@@ -106,6 +107,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3049669286339938403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154948495891506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d3483b4bbb78d74cb64b300e40bf709, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5655154948495891507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97140861abd29b43b557db58ccf47ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isKeyboardMovementEnabled: 1
+  isKeyboardMovementEnabled: 0
 --- !u!114 &2992686034631846478
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ public class Mover : MonoBehaviour
     private PlayerAnimator playerAnimator;
     private InputHandler inputHandler;
     private PlayerController playerController;
+    CharacterController characterController;
+    ForceReciver forceReciver;
 
     [field: SerializeField] public bool IsKeyboardMovementEnabled { get; private set; }
 
@@ -18,6 +20,8 @@ public class Mover : MonoBehaviour
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
         inputHandler = GetComponent<InputHandler>();
         playerController = GetComponent<PlayerController>();
+        characterController = GetComponent<CharacterController>();
+        forceReciver = GetComponent<ForceReciver>();
     }
 
     private void Update()
@@ -51,11 +55,9 @@ public class Mover : MonoBehaviour
 
         speed = movement.magnitude * playerController.PlayerMoveSpeed;
 
-        CheckIfCanMove(speed, movement);
-        //transform.position += movement * speed * deltaTime;
+        MovePlayer(movement * speed, deltaTime);
 
-        float minimumInputValueToMove = 0.05f;
-        if (movement.magnitude < minimumInputValueToMove)
+        if (movement.magnitude == 0f)
         {
             playerAnimator.UpdatePlayerMoveAnimation(0f, deltaTime);
             return;
@@ -65,44 +67,9 @@ public class Mover : MonoBehaviour
         FaceMovementDirection(movement, deltaTime);
     }
 
-    private void CheckIfCanMove(float moveSpeed, Vector3 moveDir)
+    protected void MovePlayer(Vector3 motion, float deltaTime)
     {
-        float playerRadius = navMeshAgent.radius;
-        float playerHeight = navMeshAgent.height;
-        float moveDistance = moveSpeed * Time.deltaTime;
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
-
-        if (!canMove)
-        {
-            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0).normalized;
-            canMove = (moveDir.x < -0.5f || moveDir.x > 0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
-
-            if (canMove)
-            {
-                //Can move only on X axis
-                moveDir = moveDirX;
-            }
-            else
-            {
-                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z).normalized;
-                canMove = (moveDir.z < -0.5f || moveDir.z > 0.5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
-
-                if (canMove)
-                {
-                    //Can move only on Z axis
-                    moveDir = moveDirZ;
-                }
-                else
-                {
-                    //Cannot move 
-                }
-            }
-        }
-
-        if (canMove)
-        {
-            transform.position += moveDir * moveDistance;
-        }
+        characterController.Move((motion + forceReciver.Movement) * deltaTime);
     }
 
     public Vector3 CalculateMovement()

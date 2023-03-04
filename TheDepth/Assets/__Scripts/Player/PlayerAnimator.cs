@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour
 {
     private Animator animator;
-    private Mover playerMover;
 
     private readonly int FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
 
@@ -14,12 +13,6 @@ public class PlayerAnimator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        playerMover = GetComponentInParent<Mover>();
-    }
-
-    private void Update()
-    {
-        animator.SetFloat(FORWARD_SPEED, playerMover.speed, animationMoveSmooth, Time.deltaTime);
     }
 
     public void UpdatePlayerMoveAnimation(float speed, float deltaTime)

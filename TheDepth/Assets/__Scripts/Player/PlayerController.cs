@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Mover mover;
 
+    [field: SerializeField] public float PlayerMoveSpeed { get; private set; }
+
     private void Awake()
     {
         mover = GetComponent<Mover>();
@@ -13,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && mover.IsKeyboardMovementEnabled)
         {
             MoveToCursor();
         }

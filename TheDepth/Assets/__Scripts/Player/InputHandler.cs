@@ -46,12 +46,6 @@ public class InputHandler : MonoBehaviour
         return inputVector;
     }
 
-    public Vector2 GetLookRotation()
-    {
-        Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
-        return inputVector;
-    }
-
     public void SetLookRotation()
     {
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();

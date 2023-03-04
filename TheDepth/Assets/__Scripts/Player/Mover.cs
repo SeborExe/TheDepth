@@ -1,20 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class Mover : MonoBehaviour
 {
     private NavMeshAgent navMeshAgent;
     private PlayerAnimator playerAnimator;
-    private Transform mainCamera;
     private InputHandler inputHandler;
+    private PlayerController playerController;
 
-    [SerializeField] private bool isKeyboardMovementEnabled;
+    [field: SerializeField] public bool IsKeyboardMovementEnabled { get; private set; }
 
     public float speed { get; private set; }
 
@@ -22,17 +16,16 @@ public class Mover : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         playerAnimator = GetComponentInChildren<PlayerAnimator>();
-        mainCamera = Camera.main.transform;
         inputHandler = GetComponent<InputHandler>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
-        if (isKeyboardMovementEnabled)
+        if (!IsKeyboardMovementEnabled)
         {
-            Move();
+            Move(Time.deltaTime);
             inputHandler.SetLookRotation();
-            navMeshAgent.ResetPath();
         }
         else
         {
@@ -52,31 +45,31 @@ public class Mover : MonoBehaviour
         speed = localVelocity.z;
     }
 
-    private void Move()
+    private void Move(float deltaTime)
     {
-        Vector2 inputVector = inputHandler.GetMovementVectorNormalized();
-        Vector3 moveDir;
-        moveDir = mainCamera.forward * inputVector.y;
-        moveDir += mainCamera.right * inputVector.x;
-        moveDir.Normalize();
-        moveDir.y = 0;
+        Vector3 movement = CalculateMovement();
 
-        if (inputVector.magnitude < 0.5f && inputVector.magnitude >= 0.2f)
+        speed = movement.magnitude * playerController.PlayerMoveSpeed;
+
+        CheckIfCanMove(speed, movement);
+        //transform.position += movement * speed * deltaTime;
+
+        float minimumInputValueToMove = 0.05f;
+        if (movement.magnitude < minimumInputValueToMove)
         {
-            speed = 3f;
-        }
-        else if (inputVector.magnitude >= 0.5f)
-        {
-            speed = 6f;
-        }
-        else
-        {
-            speed = 0f;
+            playerAnimator.UpdatePlayerMoveAnimation(0f, deltaTime);
+            return;
         }
 
-        float playerRadius = 0.7f;
-        float playerHeight = 2f;
-        float moveDistance = speed * Time.deltaTime;
+        playerAnimator.UpdatePlayerMoveAnimation(speed, deltaTime);
+        FaceMovementDirection(movement, deltaTime);
+    }
+
+    private void CheckIfCanMove(float moveSpeed, Vector3 moveDir)
+    {
+        float playerRadius = navMeshAgent.radius;
+        float playerHeight = navMeshAgent.height;
+        float moveDistance = moveSpeed * Time.deltaTime;
         bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
 
         if (!canMove)
@@ -110,12 +103,25 @@ public class Mover : MonoBehaviour
         {
             transform.position += moveDir * moveDistance;
         }
+    }
 
-        //isWalking = moveDir != Vector3.zero;
+    public Vector3 CalculateMovement()
+    {
+        Vector3 forward = Camera.main.transform.forward;
+        Vector3 right = Camera.main.transform.right;
 
-        float rotateSpeed = 10f;
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
+        forward.y = 0;
+        right.y = 0;
 
-        playerAnimator.UpdatePlayerMoveAnimation(speed);
+        forward.Normalize();
+        right.Normalize();
+
+        return forward * inputHandler.GetMovementVectorNormalized().y + right * inputHandler.GetMovementVectorNormalized().x;
+    }
+
+    public void FaceMovementDirection(Vector3 movement, float deltaTime)
+    {
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(movement),
+            deltaTime * 8f);
     }
 }

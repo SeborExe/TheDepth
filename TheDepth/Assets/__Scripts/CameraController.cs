@@ -25,22 +25,7 @@ public class CameraController : SingletonMonobehaviour<CameraController>
     }
 
     private void Update()
-    {
-        
-        if (Input.GetMouseButtonDown(1))
-        {
-            freeLookCamera.m_XAxis.m_MaxSpeed = rotateSpeed;
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-            freeLookCamera.m_XAxis.m_MaxSpeed = 0;
-        }
-        if (Input.mouseScrollDelta.y != 0)
-        {
-            freeLookCamera.m_YAxis.m_MaxSpeed = zoomSpeed;
-        }
-        
-
+    {  
         freeLookCamera.m_XAxis.Value = vectorRotation.x * gamepadRotateSpeed;
 
         if (zoomValue != 0)

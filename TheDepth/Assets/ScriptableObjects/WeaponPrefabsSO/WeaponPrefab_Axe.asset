@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f1538ddee01044be55100ce6c1b45, type: 3}
+  m_Name: WeaponPrefab_Axe
+  m_EditorClassIdentifier: 
+  weaponGameObject: {fileID: 144458, guid: ab522dbd4fd19ca428e546ee48ee1f5d, type: 3}
+  weaponMesh: {fileID: 4300000, guid: b726c726944d7e2479236c22c23009ce, type: 3}

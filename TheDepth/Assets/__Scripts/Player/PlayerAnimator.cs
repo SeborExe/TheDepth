@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    private Animator animator;
+    public Animator Animator { get; private set; }
 
     private readonly int FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
     private readonly int LOCOMOTION_TREE = Animator.StringToHash("Locomotion Tree");
@@ -13,16 +14,26 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
     }
 
     public void UpdatePlayerMoveAnimation(float speed, float deltaTime)
     {
-        animator.SetFloat(FORWARD_SPEED, speed, animationMoveSmooth, deltaTime);
+        Animator.SetFloat(FORWARD_SPEED, speed, animationMoveSmooth, deltaTime);
     }
 
-    public void PlayLocomotionTree()
+    public void PlayLocomotionTree(float dampTime = 0.2f)
     {
-        animator.Play(LOCOMOTION_TREE);
+        Animator.CrossFadeInFixedTime(LOCOMOTION_TREE, dampTime);
+    }
+
+    public void CrossFadeAnimation(string animationName, float transitionDuration)
+    {
+        Animator.CrossFadeInFixedTime(animationName, transitionDuration);
+    }
+
+    public void SetOverrideAnimation(AnimatorOverrideController animatorController)
+    {
+        Animator.runtimeAnimatorController = animatorController;
     }
 }

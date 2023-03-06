@@ -7,7 +7,11 @@ public class ForceReciver : MonoBehaviour
     private CharacterController characterController;
 
     private float verticalVelocity;
-    public Vector3 Movement => Vector3.up * verticalVelocity;
+    private Vector3 impact;
+    private Vector3 dampingVelocity;
+    public Vector3 Movement => impact + Vector3.up * verticalVelocity;
+
+    [SerializeField] private float drag = 0.1f;
 
     private void Awake()
     {
@@ -24,5 +28,12 @@ public class ForceReciver : MonoBehaviour
         {
             verticalVelocity += Physics.gravity.y * Time.deltaTime * 10f;
         }
+
+        impact = Vector3.SmoothDamp(impact, Vector3.zero, ref dampingVelocity, drag);
+    }
+
+    public void AddForce(Vector3 force)
+    {
+        impact += force;
     }
 }

@@ -16,6 +16,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
+        CheckForAttack();
         CheckFormMove(deltaTime);
         stateMachine.InputHandler.SetLookRotation();
     }
@@ -23,6 +24,15 @@ public class PlayerMoveState : PlayerBaseState
     public override void Exit()
     {
         
+    }
+
+    private void CheckForAttack()
+    {
+        if (stateMachine.InputHandler.IsAttacking)
+        {
+            stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
+            return;
+        }
     }
 
     private void CheckFormMove(float deltaTime)

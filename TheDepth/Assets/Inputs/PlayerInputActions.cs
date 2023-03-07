@@ -32,7 +32,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""type"": ""Value"",
                     ""id"": ""1f3ccaee-89f2-46c5-9a6c-d12891021401"",
                     ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone"",
                     ""interactions"": """",
                     ""initialStateCheck"": true
                 },
@@ -58,6 +58,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""name"": ""ZoomIn"",
                     ""type"": ""Button"",
                     ""id"": ""12f27c16-7d1c-449f-a771-cad5ee24e09f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""e5c0741c-1437-49b4-878e-d54896854cb9"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -210,28 +219,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8c8e490b-c610-4785-884f-f04217b23ca4"",
-                    ""path"": ""<Pointer>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse;Touch"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3e5f5442-8668-4b27-a940-df99bad7e831"",
-                    ""path"": ""<Joystick>/{Hatswitch}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Look"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""fb877658-ffd4-4309-936d-ab721afd8270"",
                     ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
@@ -249,6 +236,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ZoomIn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f5c97167-89ce-459f-a18a-f6831a1d3d7b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1db8940-5d0f-477c-a3ed-e1f981547d0a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Attack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -840,6 +849,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_ZoomOut = m_Player.FindAction("ZoomOut", throwIfNotFound: true);
         m_Player_ZoomIn = m_Player.FindAction("ZoomIn", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -915,6 +925,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_ZoomOut;
     private readonly InputAction m_Player_ZoomIn;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -923,6 +934,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @ZoomOut => m_Wrapper.m_Player_ZoomOut;
         public InputAction @ZoomIn => m_Wrapper.m_Player_ZoomIn;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -944,6 +956,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ZoomIn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomIn;
                 @ZoomIn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomIn;
                 @ZoomIn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnZoomIn;
+                @Attack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
+                @Attack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -960,6 +975,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ZoomIn.started += instance.OnZoomIn;
                 @ZoomIn.performed += instance.OnZoomIn;
                 @ZoomIn.canceled += instance.OnZoomIn;
+                @Attack.started += instance.OnAttack;
+                @Attack.performed += instance.OnAttack;
+                @Attack.canceled += instance.OnAttack;
             }
         }
     }
@@ -1120,6 +1138,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnZoomOut(InputAction.CallbackContext context);
         void OnZoomIn(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

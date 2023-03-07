@@ -1,27 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class PlayerAnimator : MonoBehaviour
 {
-    private Animator animator;
-    private Mover playerMover;
+    public Animator Animator { get; private set; }
 
-    private const string FORWARD_SPEED = "forwardSpeed";
+    private readonly int FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
+    private readonly int LOCOMOTION_TREE = Animator.StringToHash("Locomotion Tree");
+
+    [SerializeField] private float animationMoveSmooth = 0.2f;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        playerMover = GetComponentInParent<Mover>();
+        Animator = GetComponent<Animator>();
     }
 
-    private void Update()
+    public void UpdatePlayerMoveAnimation(float speed, float deltaTime)
     {
-        animator.SetFloat(FORWARD_SPEED, playerMover.speed);
+        Animator.SetFloat(FORWARD_SPEED, speed, animationMoveSmooth, deltaTime);
     }
 
-    public void UpdatePlayerMoveAnimation(float speed)
+    public void PlayLocomotionTree(float dampTime = 0.2f)
     {
-        animator.SetFloat(FORWARD_SPEED, speed);
+        Animator.CrossFadeInFixedTime(LOCOMOTION_TREE, dampTime);
+    }
+
+    public void CrossFadeAnimation(string animationName, float transitionDuration)
+    {
+        Animator.CrossFadeInFixedTime(animationName, transitionDuration);
+    }
+
+    public void SetOverrideAnimation(AnimatorOverrideController animatorController)
+    {
+        Animator.runtimeAnimatorController = animatorController;
     }
 }

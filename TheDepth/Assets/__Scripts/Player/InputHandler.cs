@@ -5,18 +5,22 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
-    private PlayerInput playerInput;
     private PlayerInputActions playerInputActions;
+
+    public bool IsAttacking { get; private set; }
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-
         playerInputActions = new PlayerInputActions();
+
         playerInputActions.Player.ZoomIn.performed += ZoomIn_performed;
         playerInputActions.Player.ZoomIn.canceled += ZoomIn_canceled;
         playerInputActions.Player.ZoomOut.performed += ZoomOut_performed;
         playerInputActions.Player.ZoomOut.canceled += ZoomOut_canceled;
+
+        playerInputActions.Player.Attack.performed += Attack_performed;
+        playerInputActions.Player.Attack.canceled += Attack_canceled;
+
         playerInputActions.Enable();
     }
 
@@ -46,15 +50,24 @@ public class InputHandler : MonoBehaviour
         return inputVector;
     }
 
-    public Vector2 GetLookRotation()
-    {
-        Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
-        return inputVector;
-    }
-
     public void SetLookRotation()
     {
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
         CameraController.Instance.SetVectorRotation(inputVector);
+    }
+
+    public Vector3 GetLookRotation()
+    {
+        return playerInputActions.Player.Look.ReadValue<Vector2>();
+    }
+
+    private void Attack_performed(InputAction.CallbackContext obj)
+    {
+        IsAttacking = true;
+    }
+
+    private void Attack_canceled(InputAction.CallbackContext obj)
+    {
+        IsAttacking = false;
     }
 }

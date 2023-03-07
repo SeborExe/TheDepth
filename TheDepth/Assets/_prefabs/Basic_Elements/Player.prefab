@@ -244,6 +244,7 @@ MonoBehaviour:
   <WeaponDamage>k__BackingField: {fileID: 1910176880}
   <MovementSpeed>k__BackingField: 5
   <RotationSpeed>k__BackingField: 8
+  <TimeWhilePlayerIsAbleToRotate>k__BackingField: 0.8
   <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: d6cec391f9e2d714ab8d18c0bd967433,
     type: 2}
   <WeaponTransform>k__BackingField: {fileID: 394138205}
@@ -359,19 +360,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5655154949207609609}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1593516148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5655154949207469349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a792852dcdea4d64080d2fc74e02fdea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationMoveSmooth: 0.2
 --- !u!114 &1270488415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,3 +373,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponLogic: {fileID: 1910176878}
+--- !u!114 &1593516148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154949207469349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a792852dcdea4d64080d2fc74e02fdea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationMoveSmooth: 0.2

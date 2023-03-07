@@ -51,25 +51,4 @@ public class PlayerMoveState : PlayerBaseState
         stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(speed, deltaTime);
         FaceMovementDirection(movement, deltaTime);
     }
-
-    public Vector3 CalculateMovement()
-    {
-        Vector3 forward = Camera.main.transform.forward;
-        Vector3 right = Camera.main.transform.right;
-
-        forward.y = 0;
-        right.y = 0;
-
-        forward.Normalize();
-        right.Normalize();
-
-        return forward * stateMachine.InputHandler.GetMovementVectorNormalized().y +
-            right * stateMachine.InputHandler.GetMovementVectorNormalized().x;
-    }
-
-    public void FaceMovementDirection(Vector3 movement, float deltaTime)
-    {
-        stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation, Quaternion.LookRotation(movement),
-            deltaTime * stateMachine.RotationSpeed);
-    }
 }

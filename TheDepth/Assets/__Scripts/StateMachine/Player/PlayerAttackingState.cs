@@ -28,10 +28,16 @@ public class PlayerAttackingState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
+        stateMachine.InputHandler.SetLookRotation();    
         Move(deltaTime);
-        //FaceTarget();
 
         float normalizedTime = GetNormalizedTime();
+
+        if (normalizedTime > stateMachine.TimeWhilePlayerIsAbleToRotate)
+        {
+            Vector3 movement = CalculateMovement();
+            FaceMovementDirection(movement, deltaTime);
+        }
 
         if (normalizedTime < 1f)
         {

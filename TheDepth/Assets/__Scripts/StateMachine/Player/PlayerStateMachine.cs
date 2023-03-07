@@ -11,6 +11,7 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
+    [field: SerializeField] public float TimeWhilePlayerIsAbleToRotate { get; private set; }
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
 

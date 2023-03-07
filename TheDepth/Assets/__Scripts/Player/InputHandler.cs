@@ -56,6 +56,11 @@ public class InputHandler : MonoBehaviour
         CameraController.Instance.SetVectorRotation(inputVector);
     }
 
+    public Vector3 GetLookRotation()
+    {
+        return playerInputActions.Player.Look.ReadValue<Vector2>();
+    }
+
     private void Attack_performed(InputAction.CallbackContext obj)
     {
         IsAttacking = true;

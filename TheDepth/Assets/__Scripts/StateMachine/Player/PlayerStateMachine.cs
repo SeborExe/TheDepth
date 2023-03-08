@@ -11,6 +11,8 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
+    [field: SerializeField, HideInInspector] public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
+    [field: SerializeField] public float DodgeCoolDown { get; private set; }
     [field: SerializeField] public float TimeWhilePlayerIsAbleToRotate { get; private set; }
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
@@ -34,5 +36,10 @@ public class PlayerStateMachine : StateMachine
         Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
         WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         PlayerAnimator.SetOverrideAnimation(CurrentWeapon.animatorOverride);
+    }
+
+    public void SetDodgeTime(float dodgeTime)
+    {
+        PreviousDodgeTime = dodgeTime;
     }
 }

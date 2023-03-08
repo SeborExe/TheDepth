@@ -180,7 +180,71 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1f3ccaee-89f2-46c5-9a6c-d12891021401
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2b0bfba9-b6a9-4453-b54d-376dd41d05d4
+    m_ActionName: Player/Look
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 94b74bc5-b52d-454a-843c-2bdb3bce7f23
+    m_ActionName: Player/ZoomOut
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 12f27c16-7d1c-449f-a771-cad5ee24e09f
+    m_ActionName: Player/ZoomIn
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e5c0741c-1437-49b4-878e-d54896854cb9
+    m_ActionName: Player/Attack[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: aaa9f710-94cc-49ac-8b0b-2f5d41fdf1c5
+    m_ActionName: Player/Roll[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2aaa201f-5dcf-4df9-b6f1-39610781e01e
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6cdb535b-d86d-4c0a-ac12-08b94ca8f6b3
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2e16c09e-1592-4a10-86c0-0cc382770be3
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bf2da12e-86c2-41e4-b43e-99e05123c6a9
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8fee5955-9839-4308-91c5-5640a55b35d9
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6469c870-fd71-47f3-9a66-5a81a031bac9
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 885fd08e-61b0-4570-b4fe-71aed27acb99
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c7c53fea-706d-4f41-b32c-7decf8b68027
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4ccf3b97-4ba3-4226-a13f-a1d8ce40012d
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 19d07ba8-8f51-4514-a04d-c6d0a3e13a61
+    m_ActionName: UI/TrackedDeviceOrientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -244,6 +308,8 @@ MonoBehaviour:
   <WeaponDamage>k__BackingField: {fileID: 1910176880}
   <MovementSpeed>k__BackingField: 5
   <RotationSpeed>k__BackingField: 8
+  <PreviousDodgeTime>k__BackingField: -Infinity
+  <DodgeCoolDown>k__BackingField: 2
   <TimeWhilePlayerIsAbleToRotate>k__BackingField: 0.8
   <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: d6cec391f9e2d714ab8d18c0bd967433,
     type: 2}

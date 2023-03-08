@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine.InputSystem;
 public class InputHandler : MonoBehaviour
 {
     private PlayerInputActions playerInputActions;
+
+    public event Action OnRoll;
 
     public bool IsAttacking { get; private set; }
 
@@ -20,6 +23,8 @@ public class InputHandler : MonoBehaviour
 
         playerInputActions.Player.Attack.performed += Attack_performed;
         playerInputActions.Player.Attack.canceled += Attack_canceled;
+
+        playerInputActions.Player.Roll.started += Roll_started;
 
         playerInputActions.Enable();
     }
@@ -69,5 +74,10 @@ public class InputHandler : MonoBehaviour
     private void Attack_canceled(InputAction.CallbackContext obj)
     {
         IsAttacking = false;
+    }
+
+    private void Roll_started(InputAction.CallbackContext obj)
+    {
+        OnRoll?.Invoke();
     }
 }

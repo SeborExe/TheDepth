@@ -22,7 +22,7 @@ public class EnemyIdleState : EnemyBaseState
 
         if (PlayerDetected())
         {
-            //stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+            stateMachine.SwitchState(new EnemyChasingState(stateMachine));
             return;
         }
 

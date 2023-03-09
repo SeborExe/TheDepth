@@ -11,4 +11,5 @@ public class AttackSO : ScriptableObject
     public float ComboAttackTime;
     public float ForceTime;
     public float Force;
+    public int Knockback;
 }

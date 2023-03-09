@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb0057b9266def94d89c2fc1fa6fc62c, type: 3}
   m_Name: Weapon_Bone
   m_EditorClassIdentifier: 
-  animatorOverride: {fileID: 0}
+  animatorOverride: {fileID: 22100000, guid: 2156404ee1353a94a88bfa8245f067f7, type: 2}
   weaponPrefab: {fileID: 11400000, guid: ba77027df15156d4fb3385a0130f4c3e, type: 2}
   minDamage: 2
   maxDamage: 5

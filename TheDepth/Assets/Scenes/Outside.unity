@@ -732,6 +732,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: a79a7ff7d4eb128458656c89f01340c6, type: 2}
+    - target: {fileID: 9520566, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ef59bc5d753ebe4490b708befe65999, type: 3}
 --- !u!4 &1646706230 stripped
@@ -834,8 +838,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   <PlayerDetectionRange>k__BackingField: 8
-  <MinDetectionAngle>k__BackingField: 50
-  <MaxDetectionAngle>k__BackingField: -50
+  <MinDetectionAngle>k__BackingField: -50
+  <MaxDetectionAngle>k__BackingField: 50
   <WeaponDamage>k__BackingField: {fileID: 1247055751}
   <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: f57278889ae00634aab0f07650ce3a43,
     type: 2}
@@ -1026,11 +1030,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 730739961, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000000837895
+      value: -0.00000000837895
       objectReference: {fileID: 0}
     - target: {fileID: 730739961, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.00000000195144
+      value: 0.00000000195144
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1054,11 +1058,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016015775
+      value: -0.000000017739069
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000006289239
+      value: 0.000000006965959
       objectReference: {fileID: 0}
     - target: {fileID: 944275248, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_DeadZoneWidth

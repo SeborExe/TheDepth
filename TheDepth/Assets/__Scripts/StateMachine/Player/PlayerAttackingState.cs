@@ -16,14 +16,8 @@ public class PlayerAttackingState : PlayerBaseState
 
     public override void Enter()
     {
-        SetDamage();
+        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponDamage);
         stateMachine.PlayerAnimator.CrossFadeAnimation(stateMachine.Animator, attack.AnimationName, attack.TransitionDuration);
-    }
-
-    private void SetDamage()
-    {
-        float damage = UnityEngine.Random.Range(stateMachine.CurrentWeapon.minDamage, stateMachine.CurrentWeapon.maxDamage);
-        stateMachine.WeaponDamage.SetAttack(damage);
     }
 
     public override void Tick(float deltaTime)

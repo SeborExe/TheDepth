@@ -25,4 +25,10 @@ public abstract class State
             return 0;
         }
     }
+
+    protected void SetDamage(WeaponSO currentWeapon, WeaponDamage weaponDamage)
+    {
+        float damage = Random.Range(currentWeapon.minDamage, currentWeapon.maxDamage);
+        weaponDamage.SetAttack(damage);
+    }
 }

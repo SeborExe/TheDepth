@@ -21,7 +21,7 @@ public abstract class EnemyBaseState : State
         Move(Vector3.zero, deltaTime);
     }
 
-    /*
+    
     protected void FacePlayer()
     {
         if (stateMachine.Player == null) { return; }
@@ -36,6 +36,5 @@ public abstract class EnemyBaseState : State
     {
         float playerDistanceSqure = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
         return playerDistanceSqure <= stateMachine.PlayerDetectionRange * stateMachine.PlayerDetectionRange;
-    }
-    */
+    }  
 }

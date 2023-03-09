@@ -12,8 +12,9 @@ public class EnemyStateMachine : StateMachine
     public Health Health { get; private set; }
     public EnemyAnimator EnemyAnimator { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
+
+    [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
-    [field: SerializeField] public float AttackKnockback { get; private set; }
 
     [field: Header("Detection Player")]
     [field: SerializeField] public LayerMask Detectionlayer { get; private set; }
@@ -50,7 +51,7 @@ public class EnemyStateMachine : StateMachine
     {
         Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
         WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
-        //EnemyAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
+        EnemyAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
     }
 
     public void ChangePlayerDetection(GameObject player)

@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateMachine
     public CharacterController CharacterController { get; private set; }
     public ForceReciver ForceReciver { get; private set; }
     public Animator Animator { get; private set; }
+    public Health Health { get; private set; }
     [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
@@ -25,6 +26,7 @@ public class PlayerStateMachine : StateMachine
         CharacterController = GetComponent<CharacterController>();
         ForceReciver = GetComponent<ForceReciver>();
         Animator = GetComponentInChildren<Animator>();
+        Health = GetComponent<Health>();
     }
 
     private void Start()
@@ -33,11 +35,26 @@ public class PlayerStateMachine : StateMachine
         SwitchState(new PlayerMoveState(this));
     }
 
+    private void OnEnable()
+    {
+        Health.OnTakeDamage += Health_OnTakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnTakeDamage -= Health_OnTakeDamage;
+    }
+
     private void InitializeWeapon()
     {
         Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
         WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         PlayerAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
+    }
+
+    private void Health_OnTakeDamage()
+    {
+        SwitchState(new PlayerImpactState(this));
     }
 
     public void SetDodgeTime(float dodgeTime)

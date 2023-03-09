@@ -8,6 +8,7 @@ public class WeaponDamage : MonoBehaviour
 
     private List<Collider> alreadyColliderWith = new List<Collider>();
     private float damage;
+    private int knockback;
 
     private MeshCollider meshCollider;
     private MeshFilter meshFilter;
@@ -35,14 +36,15 @@ public class WeaponDamage : MonoBehaviour
 
         if (other.TryGetComponent(out Health health))
         {
-            health.Dealdamage(damage);
+            health.Dealdamage(damage, myCollider.gameObject);
             alreadyColliderWith.Add(other);
         }
     }
     
 
-    public void SetAttack(float damage)
+    public void SetAttack(float damage, int knockback)
     {
         this.damage = damage;
+        this.knockback = knockback;
     }
 }

@@ -9,14 +9,17 @@ public class PlayerAttackingState : PlayerBaseState
     private float previousFrameTime;
     private bool alreadyAppliedForce;
 
+    int attackIndex;
+
     public PlayerAttackingState(PlayerStateMachine stateMachine, int attackIndex) : base(stateMachine)
     {
         attack = stateMachine.CurrentWeapon.attack[attackIndex];
+        this.attackIndex = attackIndex;
     }
 
     public override void Enter()
     {
-        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponDamage);
+        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponDamage, stateMachine.CurrentWeapon.attack[attackIndex].Knockback);
         stateMachine.PlayerAnimator.CrossFadeAnimation(stateMachine.Animator, attack.AnimationName, attack.TransitionDuration);
     }
 

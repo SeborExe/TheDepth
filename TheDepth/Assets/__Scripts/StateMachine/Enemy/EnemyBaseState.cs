@@ -32,6 +32,17 @@ public abstract class EnemyBaseState : State
         stateMachine.transform.rotation = Quaternion.LookRotation(lookPosition);
     }
 
+    protected void FacePlayer(float deltaTime)
+    {
+        if (stateMachine.Player == null) { return; }
+
+        Vector3 lookPosition = stateMachine.Player.transform.position - stateMachine.transform.position;
+        lookPosition.y = 0;
+
+        stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation, Quaternion.LookRotation(lookPosition),
+            deltaTime * stateMachine.RotationSpeed);
+    }
+
     protected bool IsInChaseRange()
     {
         float playerDistanceSqure = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;

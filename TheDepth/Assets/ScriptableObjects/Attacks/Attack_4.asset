@@ -18,3 +18,4 @@ MonoBehaviour:
   ComboAttackTime: 0
   ForceTime: 0.35
   Force: 3
+  Knockback: 5

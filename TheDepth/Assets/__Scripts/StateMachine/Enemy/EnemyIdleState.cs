@@ -20,7 +20,7 @@ public class EnemyIdleState : EnemyBaseState
     {
         Move(deltaTime);
 
-        if (PlayerDetected())
+        if (PlayerDetected() || stateMachine.Player != null)
         {
             stateMachine.SwitchState(new EnemyChasingState(stateMachine));
             return;

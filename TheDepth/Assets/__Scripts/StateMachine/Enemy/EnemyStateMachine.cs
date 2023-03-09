@@ -12,6 +12,7 @@ public class EnemyStateMachine : StateMachine
     public Health Health { get; private set; }
     public EnemyAnimator EnemyAnimator { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
+    [field: SerializeField] public float RotationSpeed { get; private set; }
 
     [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
@@ -47,11 +48,26 @@ public class EnemyStateMachine : StateMachine
         SwitchState(new EnemyIdleState(this));
     }
 
+    private void OnEnable()
+    {
+        Health.OnTakeDamage += Health_OnTakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        Health.OnTakeDamage -= Health_OnTakeDamage;
+    }
+
     private void InitializeWeapon()
     {
         Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
         WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         EnemyAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
+    }
+
+    private void Health_OnTakeDamage()
+    {
+        SwitchState(new EnemyImpactState(this));
     }
 
     public void ChangePlayerDetection(GameObject player)

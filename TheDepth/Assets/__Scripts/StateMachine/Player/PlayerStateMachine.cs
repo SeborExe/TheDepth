@@ -8,6 +8,7 @@ public class PlayerStateMachine : StateMachine
     public InputHandler InputHandler { get; private set; }
     public CharacterController CharacterController { get; private set; }
     public ForceReciver ForceReciver { get; private set; }
+    public Animator Animator { get; private set; }
     [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
@@ -23,6 +24,7 @@ public class PlayerStateMachine : StateMachine
         InputHandler = GetComponent<InputHandler>();
         CharacterController = GetComponent<CharacterController>();
         ForceReciver = GetComponent<ForceReciver>();
+        Animator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -35,7 +37,7 @@ public class PlayerStateMachine : StateMachine
     {
         Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
         WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
-        PlayerAnimator.SetOverrideAnimation(CurrentWeapon.animatorOverride);
+        PlayerAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
     }
 
     public void SetDodgeTime(float dodgeTime)

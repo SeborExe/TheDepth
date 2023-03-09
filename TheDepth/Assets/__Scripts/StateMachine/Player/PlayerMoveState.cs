@@ -13,7 +13,7 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void Enter()
     {
-        stateMachine.PlayerAnimator.PlayLocomotionTree();
+        stateMachine.PlayerAnimator.PlayLocomotionTree(stateMachine.Animator);
 
         stateMachine.InputHandler.OnRoll += InputHandler_OnRoll;
     }

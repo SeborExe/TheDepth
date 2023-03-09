@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a7f1538ddee01044be55100ce6c1b45, type: 3}
+  m_Name: WeaponPrefab_Bone
+  m_EditorClassIdentifier: 
+  weaponGameObject: {fileID: 4628336902382591662, guid: bd94fc63071787c43a456b9eadfab567,
+    type: 3}
+  weaponMesh: {fileID: 4300000, guid: 65950a9b271a25449bdf4d9505f50b9a, type: 3}

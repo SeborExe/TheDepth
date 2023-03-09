@@ -6,13 +6,13 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100f;
 
-    private PlayerStateMachine playerStateMachine;
+    private AnimatorController animatorController;
 
     private float health;
 
     private void Awake()
     {
-        playerStateMachine= GetComponent<PlayerStateMachine>();
+        animatorController = GetComponent<AnimatorController>();
     }
 
     private void Start()
@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
     public void Dealdamage(float damage)
     {
         if (health <= 0) { return; }
-        if (playerStateMachine.PlayerAnimator.IsImmune) { return; }
+        //if (animatorController.IsImmune) { return; }
 
         health = Mathf.Max(health - damage, 0);
 

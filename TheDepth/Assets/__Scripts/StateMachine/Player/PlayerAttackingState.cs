@@ -17,7 +17,7 @@ public class PlayerAttackingState : PlayerBaseState
     public override void Enter()
     {
         SetDamage();
-        stateMachine.PlayerAnimator.CrossFadeAnimation(attack.AnimationName, attack.TransitionDuration);
+        stateMachine.PlayerAnimator.CrossFadeAnimation(stateMachine.Animator, attack.AnimationName, attack.TransitionDuration);
     }
 
     private void SetDamage()

@@ -43,7 +43,6 @@ public class PlayerAnimator : AnimatorController
     {
         if (!Animator.GetBool(IS_INTERACTING)) return;
 
-        float delta = Time.deltaTime;
         Vector3 deltaPosition = Animator.deltaPosition;
         deltaPosition.y = 0;
         characterController.transform.position += deltaPosition;

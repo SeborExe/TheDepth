@@ -26,7 +26,7 @@ public class EnemyAttackingState : EnemyBaseState
 
         if (GetNormalizedTime(stateMachine.Animator) >= 1f)
         {
-            stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+            stateMachine.SwitchState(new EnemyRollState(stateMachine));
         }
     }
 

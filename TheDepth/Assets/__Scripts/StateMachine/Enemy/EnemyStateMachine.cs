@@ -29,6 +29,9 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
 
+    [field: Header("Damaged")]
+    [field: SerializeField] public Transform Ragdoll { get; private set; }
+
     private void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
@@ -51,11 +54,15 @@ public class EnemyStateMachine : StateMachine
     private void OnEnable()
     {
         Health.OnTakeDamage += Health_OnTakeDamage;
+        Health.OnDie += Health_OnDie;
+        PlayerStateMachine.OnPlayerDead += PlayerStateMachine_OnPlayerDead;
     }
 
     private void OnDisable()
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
+        Health.OnDie -= Health_OnDie;
+        PlayerStateMachine.OnPlayerDead -= PlayerStateMachine_OnPlayerDead;
     }
 
     private void InitializeWeapon()
@@ -73,17 +80,26 @@ public class EnemyStateMachine : StateMachine
         SwitchState(new EnemyImpactState(this));
     }
 
+    private void Health_OnDie()
+    {
+        SwitchState(new EnemyDeadState(this));
+    }
+
+    private void PlayerStateMachine_OnPlayerDead()
+    {
+        ChangePlayerDetection(null);
+    }
+
     public void ChangePlayerDetection(GameObject player)
     {
         if (player != null)
         {
             Player = player;
-            Debug.Log("Player Detected");
         }
         else
         {
             Player = null;
-            Debug.Log("I don't know where player is...");
+            SwitchState(new EnemyIdleState(this));
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyIdleState : EnemyBaseState
 {
-    private const float animationSmoothCrossFade = 0.1f;
+    private const float animationSmoothCrossFade = 1f;
 
     public EnemyIdleState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
@@ -43,6 +43,8 @@ public class EnemyIdleState : EnemyBaseState
         {
             if (colliders[i].transform.TryGetComponent(out PlayerStateMachine playerStateMachine))
             {
+                if (playerStateMachine.Health.IsDead) { return false; }
+
                 Vector3 targetDirecton = playerStateMachine.transform.position - stateMachine.transform.position;
                 float viewableAngle = Vector3.Angle(targetDirecton, stateMachine.transform.forward);
                 if (viewableAngle > stateMachine.MinDetectionAngle && viewableAngle < stateMachine.MaxDetectionAngle)

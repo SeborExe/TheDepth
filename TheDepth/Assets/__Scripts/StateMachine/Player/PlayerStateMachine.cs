@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,9 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float TimeWhilePlayerIsAbleToRotate { get; private set; }
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
+    [field: SerializeField] public Transform Ragdoll { get; private set; }
+
+    public static event Action OnPlayerDead;
 
     private void Awake()
     {
@@ -38,11 +42,13 @@ public class PlayerStateMachine : StateMachine
     private void OnEnable()
     {
         Health.OnTakeDamage += Health_OnTakeDamage;
+        Health.OnDie += Health_OnDie;
     }
 
     private void OnDisable()
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
+        Health.OnDie -= Health_OnDie;
     }
 
     private void InitializeWeapon()
@@ -58,6 +64,16 @@ public class PlayerStateMachine : StateMachine
     private void Health_OnTakeDamage()
     {
         SwitchState(new PlayerImpactState(this));
+    }
+
+    private void Health_OnDie()
+    {
+        SwitchState(new PlayerDeadState(this));
+    }
+
+    public void InvokeOnPlayerDead()
+    {
+        OnPlayerDead?.Invoke();
     }
 
     public void SetDodgeTime(float dodgeTime)

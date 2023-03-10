@@ -810,7 +810,7 @@ GameObject:
   - component: {fileID: 1798389088}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -845,17 +845,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MovementSpeed>k__BackingField: 3
   <RotationSpeed>k__BackingField: 8
-  <AttackRange>k__BackingField: 1.25
+  <AttackRange>k__BackingField: 1.1
   <Detectionlayer>k__BackingField:
     serializedVersion: 2
     m_Bits: 64
   <PlayerDetectionRange>k__BackingField: 8
-  <MinDetectionAngle>k__BackingField: -50
-  <MaxDetectionAngle>k__BackingField: 50
+  <MinDetectionAngle>k__BackingField: -70
+  <MaxDetectionAngle>k__BackingField: 70
   <WeaponLogic>k__BackingField: {fileID: 1247055751}
   <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: f57278889ae00634aab0f07650ce3a43,
     type: 2}
   <WeaponTransform>k__BackingField: {fileID: 596716732}
+  <Ragdoll>k__BackingField: {fileID: 1254408193310850855, guid: 4e91f72773dca4d4491e741bde2d399e,
+    type: 3}
 --- !u!114 &1798389089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -882,7 +884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b02f0b4c5b3403540b99121531e6de4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 70
+  maxHealth: 25
 --- !u!195 &1798389091
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1039,15 +1041,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 730739961, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22682743
+      value: 0.22682744
       objectReference: {fileID: 0}
     - target: {fileID: 730739961, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000008378946
+      value: 0.00000000837895
       objectReference: {fileID: 0}
     - target: {fileID: 730739961, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000019514388
+      value: -0.00000000195144
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1071,11 +1073,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016015768
+      value: -0.000000015187968
       objectReference: {fileID: 0}
     - target: {fileID: 815346134, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000062892362
+      value: 0.000000005964167
       objectReference: {fileID: 0}
     - target: {fileID: 944275248, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_DeadZoneWidth
@@ -1143,11 +1145,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1936878077, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001638058
+      value: 0.000000016380568
       objectReference: {fileID: 0}
     - target: {fileID: 1936878077, guid: ac21164435c733a45996e957ba2793ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000052665334
+      value: -0.0000000052665303
       objectReference: {fileID: 0}
     - target: {fileID: 6964787580458607194, guid: ac21164435c733a45996e957ba2793ac,
         type: 3}
@@ -1395,6 +1397,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 998295755, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
+      propertyPath: <Ragdoll>k__BackingField
+      value: 
+      objectReference: {fileID: 6225007912378859979, guid: d43074cf2facbdd40ace5b99c4d47101,
+        type: 3}
+    - target: {fileID: 998295755, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
       propertyPath: <WeaponLogic>k__BackingField
       value: 
       objectReference: {fileID: 139152948}
@@ -1413,6 +1420,11 @@ PrefabInstance:
     - target: {fileID: 1910176881, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
       propertyPath: m_CollisionDetection
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443754571990714022, guid: c504d792e1daef34dae2415bf1617cdd,
+        type: 3}
+      propertyPath: maxHealth
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 5655154948495885260, guid: c504d792e1daef34dae2415bf1617cdd,
         type: 3}

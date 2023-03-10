@@ -10,7 +10,7 @@ public class PlayerStateMachine : StateMachine
     public ForceReciver ForceReciver { get; private set; }
     public Animator Animator { get; private set; }
     public Health Health { get; private set; }
-    [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
+    [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
     [field: SerializeField, HideInInspector] public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
@@ -47,9 +47,12 @@ public class PlayerStateMachine : StateMachine
 
     private void InitializeWeapon()
     {
-        Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
-        WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
+        Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform).transform;
+        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         PlayerAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
+
+        WeaponLogic.transform.position = weapon.position;
+        WeaponLogic.transform.rotation = weapon.rotation;
     }
 
     private void Health_OnTakeDamage()

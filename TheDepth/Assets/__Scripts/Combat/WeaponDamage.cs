@@ -39,6 +39,11 @@ public class WeaponDamage : MonoBehaviour
             health.Dealdamage(damage, myCollider.gameObject);
             alreadyColliderWith.Add(other);
         }
+
+        if (other.TryGetComponent(out ForceReciver forceReciver))
+        {
+            forceReciver.AddForce((other.transform.position - myCollider.transform.position).normalized * knockback);
+        }
     }
     
 

@@ -26,7 +26,7 @@ public class EnemyImpactState : EnemyBaseState
         duration -= deltaTime;
         if (duration <= 0f)
         {
-            stateMachine.SwitchState(new EnemyChasingState(stateMachine));
+            stateMachine.SwitchState(new EnemyIdleState(stateMachine));
         }
     }
 

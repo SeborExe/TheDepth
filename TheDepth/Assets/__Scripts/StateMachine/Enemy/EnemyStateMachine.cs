@@ -25,7 +25,7 @@ public class EnemyStateMachine : StateMachine
     public GameObject Player { get; private set; }
 
     [field: Header("Weapon")]
-    [field: SerializeField] public WeaponDamage WeaponDamage { get; private set; }
+    [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
 
@@ -60,9 +60,12 @@ public class EnemyStateMachine : StateMachine
 
     private void InitializeWeapon()
     {
-        Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform);
-        WeaponDamage.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
+        Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform).transform;
+        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         EnemyAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
+
+        WeaponLogic.transform.position = weapon.position;
+        WeaponLogic.transform.rotation = weapon.rotation;
     }
 
     private void Health_OnTakeDamage()

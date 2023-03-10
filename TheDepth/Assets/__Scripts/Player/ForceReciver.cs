@@ -33,11 +33,14 @@ public class ForceReciver : MonoBehaviour
         }
 
         impact = Vector3.SmoothDamp(impact, Vector3.zero, ref dampingVelocity, drag);
-
-        if (impact.sqrMagnitude < 0.2f * 0.2f && agent != null)
+        
+        if (agent != null)
         {
-            impact = Vector3.zero;
-            agent.enabled = true;
+            if (impact.sqrMagnitude < 0.2f * 0.2f)
+            {
+                impact = Vector3.zero;
+                agent.enabled = true;
+            }
         }
     }
 

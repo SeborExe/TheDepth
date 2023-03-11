@@ -36,7 +36,7 @@ public class WeaponDamage : MonoBehaviour
 
         if (other.TryGetComponent(out Health health))
         {
-            health.Dealdamage(damage, myCollider.gameObject);
+            health.Dealdamage(damage, myCollider.gameObject, other.ClosestPoint(transform.position));
             alreadyColliderWith.Add(other);
         }
 

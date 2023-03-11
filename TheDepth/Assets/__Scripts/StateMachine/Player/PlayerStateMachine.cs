@@ -21,8 +21,6 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
     [field: SerializeField] public Transform Ragdoll { get; private set; }
 
-    public static event Action OnPlayerDead;
-
     private void Awake()
     {
         PlayerAnimator = GetComponentInChildren<PlayerAnimator>();
@@ -61,7 +59,7 @@ public class PlayerStateMachine : StateMachine
         WeaponLogic.transform.rotation = weapon.rotation;
     }
 
-    private void Health_OnTakeDamage()
+    private void Health_OnTakeDamage(GameObject sender)
     {
         SwitchState(new PlayerImpactState(this));
     }
@@ -69,11 +67,6 @@ public class PlayerStateMachine : StateMachine
     private void Health_OnDie()
     {
         SwitchState(new PlayerDeadState(this));
-    }
-
-    public void InvokeOnPlayerDead()
-    {
-        OnPlayerDead?.Invoke();
     }
 
     public void SetDodgeTime(float dodgeTime)

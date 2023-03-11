@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyAttackingState : EnemyBaseState
 {
     private AttackSO attack;
+    private int chanceToAttack;
 
     public EnemyAttackingState(EnemyStateMachine stateMachine) : base(stateMachine)
     {
@@ -12,6 +13,8 @@ public class EnemyAttackingState : EnemyBaseState
 
     public override void Enter()
     {
+        chanceToAttack = Random.Range(0, 100);
+
         int attackIndex = Random.Range(0, stateMachine.CurrentWeapon.attack.Length);
         attack = stateMachine.CurrentWeapon.attack[attackIndex];
 
@@ -26,7 +29,16 @@ public class EnemyAttackingState : EnemyBaseState
 
         if (GetNormalizedTime(stateMachine.Animator) >= 1f)
         {
-            stateMachine.SwitchState(new EnemyRollState(stateMachine));
+            if (stateMachine.ChanceToRollAfterAttack > chanceToAttack)
+            {
+                stateMachine.SwitchState(new EnemyRollState(stateMachine));
+                return;
+            }
+            else
+            {
+                stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+                return;
+            }
         }
     }
 

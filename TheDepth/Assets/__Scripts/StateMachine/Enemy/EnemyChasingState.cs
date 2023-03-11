@@ -31,7 +31,7 @@ public class EnemyChasingState : EnemyBaseState
         }
 
         MoveToPlayer(deltaTime);
-        FacePlayer();
+        FacePlayer(deltaTime);
 
         stateMachine.EnemyAnimator.UpdateEnemyMoveAnimation(1f, deltaTime);
     }
@@ -55,7 +55,7 @@ public class EnemyChasingState : EnemyBaseState
 
     private bool IsInAttackRange()
     {
-        if (stateMachine.Player == null) { return false; }
+        if (stateMachine.Player.IsDead) { return false; }
 
         float playerDistanceSqr = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
         return playerDistanceSqr <= stateMachine.AttackRange * stateMachine.AttackRange;

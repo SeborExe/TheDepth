@@ -24,7 +24,7 @@ public abstract class EnemyBaseState : State
     
     protected void FacePlayer()
     {
-        if (stateMachine.Player == null) { return; }
+        if (stateMachine.Player.IsDead) { return; }
 
         Vector3 lookPosition = stateMachine.Player.transform.position - stateMachine.transform.position;
         lookPosition.y = 0;
@@ -34,7 +34,7 @@ public abstract class EnemyBaseState : State
 
     protected void FacePlayer(float deltaTime)
     {
-        if (stateMachine.Player == null) { return; }
+        if (stateMachine.Player.IsDead) { return; }
 
         Vector3 lookPosition = stateMachine.Player.transform.position - stateMachine.transform.position;
         lookPosition.y = 0;
@@ -45,7 +45,7 @@ public abstract class EnemyBaseState : State
 
     protected bool IsInChaseRange()
     {
-        if (stateMachine.Player == null) { return false; }
+        if (stateMachine.Player.IsDead) { return false; }
 
         float playerDistanceSqure = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
         return playerDistanceSqure <= stateMachine.PlayerDetectionRange * stateMachine.PlayerDetectionRange;

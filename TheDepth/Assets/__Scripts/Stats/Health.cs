@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    public event Action OnTakeDamage;
+    public event Action<GameObject> OnTakeDamage;
     public event Action OnDie;
 
     [SerializeField] private float maxHealth = 100f;
@@ -15,6 +15,7 @@ public class Health : MonoBehaviour
     private AnimatorController animatorController;
 
     private float health;
+    private Vector3 attackPosition;
 
     private void Awake()
     {
@@ -26,27 +27,19 @@ public class Health : MonoBehaviour
         health = maxHealth;
     }
 
-    public void Dealdamage(float damage, GameObject sender)
+    public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)
     {
         if (health <= 0) { return; }
         if (animatorController.IsImmune) { return; }
         if (gameObject.tag == sender.tag) { return; }
 
         health = Mathf.Max(health - damage, 0);
-        OnTakeDamage?.Invoke();
+        OnTakeDamage?.Invoke(sender);
 
-        //if (TryGetComponent(out EnemyStateMachine enemyStateMachine))
-        //{
-        //    enemyStateMachine.ChangePlayerDetection(sender);
-        //}
+        this.attackPosition = attackPosition;
 
         if (health == 0)
         {
-            if (TryGetComponent(out PlayerStateMachine playerStateMachine))
-            {
-                playerStateMachine.InvokeOnPlayerDead();
-            }
-
             OnDie?.Invoke();
         }
     }
@@ -57,7 +50,7 @@ public class Health : MonoBehaviour
         SetRagdollObjectWeapon(ragdollTransform, currentWeapon);
 
         MatchAllChildrenTransform(transform, ragdollTransform);
-        ApplyExplosionToRagdoll(ragdollTransform, 500f, new Vector3(0, 0, 0), 10f);
+        ApplyExplosionToRagdoll(ragdollTransform, 500f, attackPosition, 10f);
 
         Destroy(gameObject);
     }

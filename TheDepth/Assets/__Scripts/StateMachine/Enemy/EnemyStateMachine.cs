@@ -16,13 +16,14 @@ public class EnemyStateMachine : StateMachine
 
     [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
+    [field: SerializeField] public float ChanceToRollAfterAttack { get; private set; }
 
     [field: Header("Detection Player")]
     [field: SerializeField] public LayerMask Detectionlayer { get; private set; }
     [field: SerializeField] public float PlayerDetectionRange { get; private set; }
     [field: SerializeField] public float MinDetectionAngle { get; private set; }
     [field: SerializeField] public float MaxDetectionAngle { get; private set; }
-    public GameObject Player { get; private set; }
+    public Health Player { get; private set; }
 
     [field: Header("Weapon")]
     [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
@@ -55,14 +56,12 @@ public class EnemyStateMachine : StateMachine
     {
         Health.OnTakeDamage += Health_OnTakeDamage;
         Health.OnDie += Health_OnDie;
-        PlayerStateMachine.OnPlayerDead += PlayerStateMachine_OnPlayerDead;
     }
 
     private void OnDisable()
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
         Health.OnDie -= Health_OnDie;
-        PlayerStateMachine.OnPlayerDead -= PlayerStateMachine_OnPlayerDead;
     }
 
     private void InitializeWeapon()
@@ -75,9 +74,9 @@ public class EnemyStateMachine : StateMachine
         WeaponLogic.transform.rotation = weapon.rotation;
     }
 
-    private void Health_OnTakeDamage()
+    private void Health_OnTakeDamage(GameObject sender)
     {
-        SwitchState(new EnemyImpactState(this));
+        SwitchState(new EnemyImpactState(this, sender));
     }
 
     private void Health_OnDie()
@@ -85,12 +84,7 @@ public class EnemyStateMachine : StateMachine
         SwitchState(new EnemyDeadState(this));
     }
 
-    private void PlayerStateMachine_OnPlayerDead()
-    {
-        ChangePlayerDetection(null);
-    }
-
-    public void ChangePlayerDetection(GameObject player)
+    public void ChangePlayerDetection(Health player)
     {
         if (player != null)
         {

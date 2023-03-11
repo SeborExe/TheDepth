@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyIdleState : EnemyBaseState
 {
@@ -14,6 +15,7 @@ public class EnemyIdleState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, stateMachine.EnemyAnimator.LOCOMOTION_TREE, animationSmoothCrossFade);
+        stateMachine.NavMeshAgent.updatePosition = true;
     }
 
     public override void Tick(float deltaTime)
@@ -31,7 +33,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Exit()
     {
-
+        stateMachine.NavMeshAgent.updatePosition = false;
     }
 
     private bool PlayerDetected()
@@ -49,7 +51,7 @@ public class EnemyIdleState : EnemyBaseState
                 float viewableAngle = Vector3.Angle(targetDirecton, stateMachine.transform.forward);
                 if (viewableAngle > stateMachine.MinDetectionAngle && viewableAngle < stateMachine.MaxDetectionAngle)
                 {
-                    stateMachine.ChangePlayerDetection(colliders[i].gameObject);
+                    stateMachine.ChangePlayerDetection(colliders[i].GetComponent<Health>());
                     return true;
                 }
             }

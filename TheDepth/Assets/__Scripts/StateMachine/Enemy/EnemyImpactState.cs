@@ -9,14 +9,20 @@ public class EnemyImpactState : EnemyBaseState
     private const float CrossFadeDuration = 0.1f;
 
     private float duration = 1f;
+    private GameObject sender;
 
-    public EnemyImpactState(EnemyStateMachine stateMachine) : base(stateMachine)
+    public EnemyImpactState(EnemyStateMachine stateMachine, GameObject sender) : base(stateMachine)
     {
+        this.sender = sender;
     }
 
     public override void Enter()
     {
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, Impact, CrossFadeDuration);
+        if (stateMachine.Player == null)
+        {
+            stateMachine.ChangePlayerDetection(sender.GetComponent<Health>());
+        }
     }
 
     public override void Tick(float deltaTime)

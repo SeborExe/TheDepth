@@ -20,7 +20,7 @@ public class EnemyChasingState : EnemyBaseState
         if (!IsInChaseRange())
         {
             stateMachine.ChangePlayerDetection(null);
-            stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+            stateMachine.SwitchState(new EnemySuspiciousState(stateMachine));
             return;
         }
 

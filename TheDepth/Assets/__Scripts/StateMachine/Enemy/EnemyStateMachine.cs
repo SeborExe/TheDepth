@@ -26,6 +26,12 @@ public class EnemyStateMachine : StateMachine
     [field: SerializeField] public float MaxDetectionAngle { get; private set; }
     public Health Player { get; private set; }
 
+    [field: Header("Suspicious and Patroling")]
+    [field: SerializeField] public float PercentSpeedWhenBackToPosition { get; private set; }
+    [field: SerializeField] public float TimeInSuspiciousState { get; private set; }
+    public Vector3 startPosition { get; private set; }
+    public Quaternion startRotation { get; private set; }
+
     [field: Header("Weapon")]
     [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
@@ -48,6 +54,9 @@ public class EnemyStateMachine : StateMachine
     {
         NavMeshAgent.updatePosition = false;
         NavMeshAgent.updateRotation = false;
+
+        startPosition = transform.position;
+        startRotation = transform.rotation;
 
         InitializeWeapon();
         SwitchState(new EnemyIdleState(this));

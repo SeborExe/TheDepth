@@ -27,8 +27,11 @@ public class EnemyStateMachine : StateMachine
     public Health Player { get; private set; }
 
     [field: Header("Suspicious and Patroling")]
+    [field: SerializeField] public PatrolPath PatrolPath { get; private set; }
     [field: SerializeField] public float PercentSpeedWhenBackToPosition { get; private set; }
     [field: SerializeField] public float TimeInSuspiciousState { get; private set; }
+    [field: SerializeField] public float PercentSpeedInPatrolingState { get; private set; }
+    [field: SerializeField] public float TimeInPatrolCheckPoint { get; private set; }
     public Vector3 startPosition { get; private set; }
     public Quaternion startRotation { get; private set; }
 
@@ -59,7 +62,15 @@ public class EnemyStateMachine : StateMachine
         startRotation = transform.rotation;
 
         InitializeWeapon();
-        SwitchState(new EnemyIdleState(this));
+        
+        if (PatrolPath != null)
+        {
+            SwitchState(new EnemyPatrolingState(this));
+        }
+        else
+        {
+            SwitchState(new EnemyIdleState(this));
+        }
     }
 
     private void OnEnable()

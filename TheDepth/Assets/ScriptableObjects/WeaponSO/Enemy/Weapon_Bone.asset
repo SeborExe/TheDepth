@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0057b9266def94d89c2fc1fa6fc62c, type: 3}
+  m_Name: Weapon_Bone
+  m_EditorClassIdentifier: 
+  animatorOverride: {fileID: 22100000, guid: 2156404ee1353a94a88bfa8245f067f7, type: 2}
+  weaponPrefab: {fileID: 11400000, guid: ba77027df15156d4fb3385a0130f4c3e, type: 2}
+  minDamage: 2
+  maxDamage: 5
+  attack:
+  - {fileID: 11400000, guid: a74c802e1a66ec84d99374ff91feb624, type: 2}
+  - {fileID: 11400000, guid: 509390ad1dac25f4284e8749c0809afc, type: 2}
+  - {fileID: 11400000, guid: 7c579eb9615f2434f832f84d2adcd768, type: 2}

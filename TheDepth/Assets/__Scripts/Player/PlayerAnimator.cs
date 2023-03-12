@@ -3,37 +3,48 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : AnimatorController
 {
     public Animator Animator { get; private set; }
 
+    private CharacterController characterController;
+
     private readonly int FORWARD_SPEED = Animator.StringToHash("forwardSpeed");
-    private readonly int LOCOMOTION_TREE = Animator.StringToHash("Locomotion Tree");
+    private readonly int IS_INTERACTING = Animator.StringToHash("IsInteracting");
+
+    public bool IsInteracting { get; private set; }
 
     [SerializeField] private float animationMoveSmooth = 0.2f;
 
     private void Awake()
     {
         Animator = GetComponent<Animator>();
+        characterController = GetComponentInParent<CharacterController>();
+    }
+
+    private void Update()
+    {
+        IsInteracting = Animator.GetBool(IS_INTERACTING);
     }
 
     public void UpdatePlayerMoveAnimation(float speed, float deltaTime)
     {
         Animator.SetFloat(FORWARD_SPEED, speed, animationMoveSmooth, deltaTime);
     }
-
-    public void PlayLocomotionTree(float dampTime = 0.2f)
+    
+    public void PlayTargetAnimation(string targetAnimation, bool IsInteracting)
     {
-        Animator.CrossFadeInFixedTime(LOCOMOTION_TREE, dampTime);
+        Animator.applyRootMotion = IsInteracting;
+        Animator.SetBool(IS_INTERACTING, IsInteracting);
+        Animator.CrossFadeInFixedTime(targetAnimation, animationMoveSmooth);
     }
 
-    public void CrossFadeAnimation(string animationName, float transitionDuration)
+    private void OnAnimatorMove()
     {
-        Animator.CrossFadeInFixedTime(animationName, transitionDuration);
-    }
+        if (!Animator.GetBool(IS_INTERACTING)) return;
 
-    public void SetOverrideAnimation(AnimatorOverrideController animatorController)
-    {
-        Animator.runtimeAnimatorController = animatorController;
+        Vector3 deltaPosition = Animator.deltaPosition;
+        deltaPosition.y = 0;
+        characterController.transform.position += deltaPosition;
     }
 }

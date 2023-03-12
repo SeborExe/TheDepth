@@ -9,21 +9,18 @@ public class PlayerAttackingState : PlayerBaseState
     private float previousFrameTime;
     private bool alreadyAppliedForce;
 
+    int attackIndex;
+
     public PlayerAttackingState(PlayerStateMachine stateMachine, int attackIndex) : base(stateMachine)
     {
         attack = stateMachine.CurrentWeapon.attack[attackIndex];
+        this.attackIndex = attackIndex;
     }
 
     public override void Enter()
     {
-        SetDamage();
-        stateMachine.PlayerAnimator.CrossFadeAnimation(attack.AnimationName, attack.TransitionDuration);
-    }
-
-    private void SetDamage()
-    {
-        float damage = UnityEngine.Random.Range(stateMachine.CurrentWeapon.minDamage, stateMachine.CurrentWeapon.maxDamage);
-        stateMachine.WeaponDamage.SetAttack(damage);
+        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponLogic, stateMachine.CurrentWeapon.attack[attackIndex].Knockback);
+        stateMachine.PlayerAnimator.CrossFadeAnimation(stateMachine.Animator, attack.AnimationName, attack.TransitionDuration);
     }
 
     public override void Tick(float deltaTime)

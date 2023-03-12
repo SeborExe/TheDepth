@@ -16,7 +16,8 @@ public class EnemyStateMachine : StateMachine
 
     [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
-    [field: SerializeField] public float ChanceToRollAfterAttack { get; private set; }
+    [field: SerializeField] public int ChanceToRollAfterAttack { get; private set; }
+    [field: SerializeField] public int ChanceToRollAfterTakeDamage { get; private set; }
 
     [field: Header("Detection Player")]
     [field: SerializeField] public LayerMask Detectionlayer { get; private set; }

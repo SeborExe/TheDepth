@@ -32,7 +32,16 @@ public class EnemyImpactState : EnemyBaseState
         duration -= deltaTime;
         if (duration <= 0f)
         {
-            stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+            if (IsRollSuccessed(stateMachine.ChanceToRollAfterTakeDamage))
+            {
+                stateMachine.SwitchState(new EnemyRollState(stateMachine));
+                return;
+            }
+            else
+            {
+                stateMachine.SwitchState(new EnemyIdleState(stateMachine));
+                return;
+            }
         }
     }
 

@@ -49,5 +49,15 @@ public abstract class EnemyBaseState : State
 
         float playerDistanceSqure = (stateMachine.Player.transform.position - stateMachine.transform.position).sqrMagnitude;
         return playerDistanceSqure <= stateMachine.PlayerDetectionRange * stateMachine.PlayerDetectionRange;
-    }  
+    }
+
+    protected bool CheckIfAnimationIsOver(string animationName)
+    {
+        return stateMachine.Animator.GetCurrentAnimatorStateInfo(0).IsName(animationName) || !stateMachine.Animator.IsInTransition(0);
+    }
+
+    protected bool IsRollSuccessed(int chance)
+    {
+        return chance > Random.Range(0, 100);
+    }
 }

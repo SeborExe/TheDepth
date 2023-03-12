@@ -15,7 +15,6 @@ public class EnemyIdleState : EnemyBaseState
     public override void Enter()
     {
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, stateMachine.EnemyAnimator.LOCOMOTION_TREE, animationSmoothCrossFade);
-        stateMachine.NavMeshAgent.updatePosition = true;
     }
 
     public override void Tick(float deltaTime)
@@ -33,7 +32,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Exit()
     {
-        stateMachine.NavMeshAgent.updatePosition = false;
+
     }
 
     private bool PlayerDetected()

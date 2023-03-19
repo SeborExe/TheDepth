@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Outside.unity
     guid: b3080632c7979fd409561985c63ab9e2
   - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: a52830881f13cff4ab4b0216cffb576a
+  - enabled: 1
     path: Assets/Scenes/Dungeon.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}

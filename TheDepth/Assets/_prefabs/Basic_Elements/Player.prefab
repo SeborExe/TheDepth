@@ -292,6 +292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa3a6deb105ec6479d06bc3f65dea31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
   drag: 0.1
 --- !u!114 &998295755
 MonoBehaviour:
@@ -305,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c134307f928062b46aa208566f2b0660, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponDamage>k__BackingField: {fileID: 1910176880}
+  <WeaponLogic>k__BackingField: {fileID: 1910176880}
   <MovementSpeed>k__BackingField: 5
   <RotationSpeed>k__BackingField: 8
   <PreviousDodgeTime>k__BackingField: -Infinity
@@ -314,6 +315,8 @@ MonoBehaviour:
   <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: d6cec391f9e2d714ab8d18c0bd967433,
     type: 2}
   <WeaponTransform>k__BackingField: {fileID: 394138205}
+  <Ragdoll>k__BackingField: {fileID: 6225007912378859979, guid: d43074cf2facbdd40ace5b99c4d47101,
+    type: 3}
 --- !u!114 &2443754571990714022
 MonoBehaviour:
   m_ObjectHideFlags: 0

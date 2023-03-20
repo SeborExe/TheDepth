@@ -4,3 +4,8 @@ public enum Scenes
     Outside,
     Dungeon
 }
+
+public enum DestinationIdentifier
+{
+    A, B, C, D, E, F, G, H
+}

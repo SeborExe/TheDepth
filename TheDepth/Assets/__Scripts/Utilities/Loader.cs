@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,6 @@ public static class Loader
     public static void Load(Scenes scene)
     {
         targetScene = scene;
-        SceneManager.LoadScene(Scenes.LoadingScene.ToString());
     }
 
     public static void LoaderCallback()

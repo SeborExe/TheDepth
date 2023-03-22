@@ -1,9 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class PlayerStateMachine : StateMachine
+public class PlayerStateMachine : StateMachine, ISaveable
 {
     public PlayerAnimator PlayerAnimator { get; private set; }
     public InputHandler InputHandler { get; private set; }
@@ -72,5 +73,20 @@ public class PlayerStateMachine : StateMachine
     public void SetDodgeTime(float dodgeTime)
     {
         PreviousDodgeTime = dodgeTime;
+    }
+
+    public object CaptureState()
+    {
+        return new SerializableTransform(transform);
+    }
+
+    public void RestoreState(object state)
+    {
+        SerializableTransform position = (SerializableTransform)state;
+        CharacterController.enabled = false;
+        CharacterController.transform.position = position.ToTransform().Position;
+        CharacterController.transform.rotation = position.ToTransform().Rotation;
+        CharacterController.enabled = true;
+        Debug.Log("LOAD");
     }
 }

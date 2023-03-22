@@ -31,12 +31,12 @@ public class SavingWrapper : SingletonMonobehaviour<SavingWrapper>
         }
     }
 
-    private void Load()
+    public void Load()
     {
         savingSystem.Load(dafaulcSaveFile);
     }
 
-    private void Save()
+    public void Save()
     {
         savingSystem.Save(dafaulcSaveFile);
     }

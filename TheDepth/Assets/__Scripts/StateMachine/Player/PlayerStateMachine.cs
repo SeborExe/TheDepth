@@ -83,10 +83,13 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public void RestoreState(object state)
     {
         SerializableTransform position = (SerializableTransform)state;
+
+        ForceReciver.Reset();
+
+        //Somethimes player is loading under ground. Change in future.
+        CharacterController.transform.position = position.ToTransform().Position + new Vector3(0, 6f, 0);
         CharacterController.enabled = false;
-        CharacterController.transform.position = position.ToTransform().Position;
         CharacterController.transform.rotation = position.ToTransform().Rotation;
         CharacterController.enabled = true;
-        Debug.Log("LOAD");
     }
 }

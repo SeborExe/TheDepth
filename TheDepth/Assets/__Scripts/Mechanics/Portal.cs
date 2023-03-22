@@ -33,6 +33,9 @@ public class Portal : MonoBehaviour
 
         Loader.Load(scene);
 
+        //Save current Level
+        SavingWrapper.Instance.Save();
+
         SceneManager.LoadSceneAsync(Scenes.LoadingScene.ToString());
 
         while (SceneManager.GetActiveScene().name != scene.ToString())
@@ -41,6 +44,9 @@ public class Portal : MonoBehaviour
         }
 
         await Task.Yield();
+
+        //Load current Level
+        SavingWrapper.Instance.Load();
 
         Portal otherPortal = GetOtherPortal();
         UpdatePlayer(otherPortal);
@@ -63,7 +69,11 @@ public class Portal : MonoBehaviour
     private void UpdatePlayer(Portal otherPortal)
     {
         Player player = Player.Instance;
+        CharacterController characterController = player.GetComponent<CharacterController>();
+
+        characterController.enabled = false;
         player.gameObject.transform.position = otherPortal.spawnPoint.position;
         player.gameObject.transform.rotation = otherPortal.spawnPoint.rotation;
+        characterController.enabled = true;
     }
 }

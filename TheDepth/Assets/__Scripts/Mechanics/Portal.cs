@@ -34,7 +34,7 @@ public class Portal : MonoBehaviour
         Loader.Load(scene);
 
         //Save current Level
-        SavingWrapper.Instance.Save();
+        //SavingWrapper.Instance.Save();
 
         SceneManager.LoadSceneAsync(Scenes.LoadingScene.ToString());
 
@@ -46,10 +46,14 @@ public class Portal : MonoBehaviour
         await Task.Yield();
 
         //Load current Level
-        SavingWrapper.Instance.Load();
+        //SavingWrapper.Instance.Load();
 
         Portal otherPortal = GetOtherPortal();
         UpdatePlayer(otherPortal);
+
+        //Save current Level
+        //SavingWrapper.Instance.Save();
+
         Destroy(gameObject);
     }
 

@@ -16,6 +16,12 @@ public class SavingWrapper : SingletonMonobehaviour<SavingWrapper>
         savingSystem = GetComponent<SavingSystem>();
 
         DontDestroyOnLoad(gameObject);
+        LoadLastScene();
+    }
+
+    private IEnumerator LoadLastScene()
+    {
+        yield return savingSystem.LoadLastScene(dafaulcSaveFile);
     }
 
     private void Update()

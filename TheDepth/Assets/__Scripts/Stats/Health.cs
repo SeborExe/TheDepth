@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class Health : MonoBehaviour, ISaveable
 {
     public event Action<GameObject> OnTakeDamage;
     public event Action OnDie;
@@ -16,6 +16,7 @@ public class Health : MonoBehaviour
 
     private float health;
     private Vector3 attackPosition;
+    private GameObject ragdoll;
 
     private void Awake()
     {
@@ -52,7 +53,8 @@ public class Health : MonoBehaviour
         MatchAllChildrenTransform(transform, ragdollTransform);
         ApplyExplosionToRagdoll(ragdollTransform, 500f, attackPosition, 10f);
 
-        Destroy(gameObject);
+        this.ragdoll = ragdollTransform.gameObject;
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 
     private void SetRagdollObjectWeapon(Transform ragdollTransform, WeaponSO currentWeapon)
@@ -86,6 +88,24 @@ public class Health : MonoBehaviour
             }
 
             ApplyExplosionToRagdoll(child, explosionForce, explosionPosiion, explosionRange);
+        }
+    }
+
+    public object CaptureState()
+    {
+        return health;
+    }
+
+    public void RestoreState(object state)
+    {
+        health = (float)state;
+        if (health > 0)
+        {
+            transform.GetChild(0).gameObject.SetActive(true);
+            if (ragdoll != null)
+            {
+                Destroy(ragdoll);
+            }
         }
     }
 }

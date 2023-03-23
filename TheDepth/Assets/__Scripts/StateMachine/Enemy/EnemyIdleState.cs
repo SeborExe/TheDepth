@@ -14,6 +14,7 @@ public class EnemyIdleState : EnemyBaseState
 
     public override void Enter()
     {
+        stateMachine.SetCurrentState(this);
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, stateMachine.EnemyAnimator.LOCOMOTION_TREE, animationSmoothCrossFade);
     }
 

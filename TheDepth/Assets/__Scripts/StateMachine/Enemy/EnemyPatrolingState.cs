@@ -16,6 +16,7 @@ public class EnemyPatrolingState : EnemyBaseState
 
     public override void Enter()
     {
+        stateMachine.SetCurrentState(this);
         nextPosition = GetCurrentWaypoint();
         stateMachine.NavMeshAgent.updatePosition = true;
     }

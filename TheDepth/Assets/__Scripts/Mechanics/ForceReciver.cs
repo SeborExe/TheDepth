@@ -52,4 +52,10 @@ public class ForceReciver : MonoBehaviour
             agent.enabled = false;
         }
     }
+
+    public void Reset()
+    {
+        impact = Vector3.zero;
+        verticalVelocity = 0f;
+    }
 }

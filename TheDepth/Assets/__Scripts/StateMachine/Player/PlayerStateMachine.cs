@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStateMachine : StateMachine
+public class PlayerStateMachine : StateMachine, ISaveable
 {
     public PlayerAnimator PlayerAnimator { get; private set; }
     public InputHandler InputHandler { get; private set; }
@@ -72,5 +70,29 @@ public class PlayerStateMachine : StateMachine
     public void SetDodgeTime(float dodgeTime)
     {
         PreviousDodgeTime = dodgeTime;
+    }
+
+    public object CaptureState()
+    {
+        Dictionary<string, object> data = new Dictionary<string, object>();
+        data["transform"] = new SerializableTransform(transform);
+        data["scene"] = Loader.GetActiveSceneName();
+
+        return data;
+    }
+
+    public async void RestoreState(object state)
+    {
+        Dictionary<string, object> data = (Dictionary<string, object>)state;
+
+        ForceReciver.Reset();
+
+        await Loader.LoadScene((string)data["scene"]);
+
+        //Somethimes player is loading under ground. Change in future.
+        CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position + new Vector3(0, 6f, 0);
+        CharacterController.enabled = false;
+        CharacterController.transform.rotation = ((SerializableTransform)data["transform"]).ToTransform().Rotation;
+        CharacterController.enabled = true;
     }
 }

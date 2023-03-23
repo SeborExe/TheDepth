@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStateMachine : StateMachine
+public class EnemyStateMachine : StateMachine, ISaveable
 {
     public Animator Animator { get; private set; }
     public CharacterController CharacterController { get; private set; }
@@ -13,6 +13,7 @@ public class EnemyStateMachine : StateMachine
     public EnemyAnimator EnemyAnimator { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
+    public EnemyBaseState CurrentState { get; private set; }
 
     [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
@@ -118,9 +119,32 @@ public class EnemyStateMachine : StateMachine
         }
     }
 
+    public void SetCurrentState(EnemyBaseState state)
+    {
+        CurrentState = state;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, PlayerDetectionRange);
+    }
+
+    public object CaptureState()
+    {
+        return new SerializableTransform(transform);
+    }
+
+    public void RestoreState(object state)
+    {
+        SerializableTransform position = (SerializableTransform)state;
+
+        ForceReciver.Reset();
+        CharacterController.enabled = false;
+        NavMeshAgent.enabled = false;
+        CharacterController.transform.position = position.ToTransform().Position;
+        CharacterController.transform.rotation = position.ToTransform().Rotation;
+        NavMeshAgent.enabled = true;
+        CharacterController.enabled = true;
     }
 }

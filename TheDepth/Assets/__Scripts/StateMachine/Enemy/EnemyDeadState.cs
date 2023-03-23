@@ -10,6 +10,7 @@ public class EnemyDeadState : EnemyBaseState
 
     public override void Enter()
     {
+        stateMachine.SetCurrentState(this);
         stateMachine.Health.InstantiateRagdoll(stateMachine.Ragdoll, stateMachine.CurrentWeapon);
     }
 

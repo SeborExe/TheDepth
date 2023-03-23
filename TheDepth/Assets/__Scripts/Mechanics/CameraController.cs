@@ -24,6 +24,12 @@ public class CameraController : SingletonMonobehaviour<CameraController>
         freeLookCamera.m_YAxis.m_InvertInput = invertYAxis;
     }
 
+    private void Start()
+    {
+        freeLookCamera.Follow = Player.Instance.transform;
+        freeLookCamera.LookAt = Player.Instance.transform;
+    }
+
     private void Update()
     {  
         freeLookCamera.m_XAxis.Value = vectorRotation.x * gamepadRotateSpeed;

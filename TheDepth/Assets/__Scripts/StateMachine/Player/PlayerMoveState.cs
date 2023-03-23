@@ -88,5 +88,4 @@ public class PlayerMoveState : PlayerBaseState
             //Backstep?
         }
     }
-    
 }

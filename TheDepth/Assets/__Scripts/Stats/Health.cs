@@ -8,7 +8,7 @@ public class Health : MonoBehaviour, ISaveable
     public event Action<GameObject> OnTakeDamage;
     public event Action OnDie;
 
-    [SerializeField] private float maxHealth = 100f;
+    public float MaxHealth { get; private set; }
 
     public bool IsDead => health == 0;
 
@@ -23,9 +23,10 @@ public class Health : MonoBehaviour, ISaveable
         animatorController = GetComponentInChildren<AnimatorController>();
     }
 
-    private void Start()
+    public void Initialize(BaseStats baseStats)
     {
-        health = maxHealth;
+        health = baseStats.GetHealth();
+        MaxHealth = baseStats.GetHealth();
     }
 
     public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)
@@ -89,6 +90,11 @@ public class Health : MonoBehaviour, ISaveable
 
             ApplyExplosionToRagdoll(child, explosionForce, explosionPosiion, explosionRange);
         }
+    }
+
+    public float GetHealth()
+    {
+        return health;
     }
 
     public object CaptureState()

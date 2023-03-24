@@ -10,10 +10,14 @@ public class EnemyStateMachine : StateMachine, ISaveable
     public ForceReciver ForceReciver { get; private set; }
     public NavMeshAgent NavMeshAgent { get; private set; }
     public Health Health { get; private set; }
+    public BaseStats BaseStats { get; private set; }
     public EnemyAnimator EnemyAnimator { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
     public EnemyBaseState CurrentState { get; private set; }
+
+    [field: Header("UI")]
+    [field: SerializeField] public EnemyHealthUI EnemyHealthUI { get; private set; }
 
     [field: Header("Attack")]
     [field: SerializeField] public float AttackRange { get; private set; }
@@ -52,6 +56,7 @@ public class EnemyStateMachine : StateMachine, ISaveable
         NavMeshAgent = GetComponent<NavMeshAgent>();
         Health = GetComponent<Health>();
         EnemyAnimator = GetComponentInChildren<EnemyAnimator>();
+        BaseStats = GetComponent<BaseStats>();
     }
 
     private void Start()
@@ -63,15 +68,12 @@ public class EnemyStateMachine : StateMachine, ISaveable
         startRotation = transform.rotation;
 
         InitializeWeapon();
-        
-        if (PatrolPath != null)
-        {
-            SwitchState(new EnemyPatrolingState(this));
-        }
-        else
-        {
-            SwitchState(new EnemyIdleState(this));
-        }
+        Health.Initialize(BaseStats);
+
+        if (EnemyHealthUI.gameObject.activeSelf == false) { EnemyHealthUI.gameObject.SetActive(true); }
+        EnemyHealthUI.InitializeUI(Health);
+
+        SetStartingState();
     }
 
     private void OnEnable()
@@ -84,6 +86,18 @@ public class EnemyStateMachine : StateMachine, ISaveable
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
         Health.OnDie -= Health_OnDie;
+    }
+
+    private void SetStartingState()
+    {
+        if (PatrolPath != null)
+        {
+            SwitchState(new EnemyPatrolingState(this));
+        }
+        else
+        {
+            SwitchState(new EnemyIdleState(this));
+        }
     }
 
     private void InitializeWeapon()

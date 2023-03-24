@@ -9,3 +9,9 @@ public enum DestinationIdentifier
 {
     A, B, C, D, E, F, G, H
 }
+
+public enum CharacterClass
+{
+    Player,
+    Goblin_Mele
+}

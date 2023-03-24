@@ -15,3 +15,9 @@ public enum CharacterClass
     Player,
     Goblin_Mele
 }
+
+public enum Stat
+{
+    Health,
+    ExperienceReward
+}

@@ -13,6 +13,7 @@ public class Health : MonoBehaviour, ISaveable
     public bool IsDead => health == 0;
 
     private AnimatorController animatorController;
+    private BaseStats baseStats;
 
     private float health;
     private Vector3 attackPosition;
@@ -21,12 +22,13 @@ public class Health : MonoBehaviour, ISaveable
     private void Awake()
     {
         animatorController = GetComponentInChildren<AnimatorController>();
+        baseStats = GetComponent<BaseStats>();
     }
 
     public void Initialize(BaseStats baseStats)
     {
-        health = baseStats.GetHealth();
-        MaxHealth = baseStats.GetHealth();
+        health = baseStats.GetStat(Stat.Health);
+        MaxHealth = baseStats.GetStat(Stat.Health);
     }
 
     public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)
@@ -43,6 +45,7 @@ public class Health : MonoBehaviour, ISaveable
         if (health == 0)
         {
             OnDie?.Invoke();
+            AwardExperiene(sender);
         }
     }
 
@@ -89,6 +92,14 @@ public class Health : MonoBehaviour, ISaveable
             }
 
             ApplyExplosionToRagdoll(child, explosionForce, explosionPosiion, explosionRange);
+        }
+    }
+
+    private void AwardExperiene(GameObject sender)
+    {
+        if (sender.TryGetComponent(out Player player))
+        {
+            player.GainExperience(baseStats.GetStat(Stat.ExperienceReward));
         }
     }
 

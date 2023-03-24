@@ -2,16 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : SingletonMonobehaviour<Player>
+public class Player : SingletonMonobehaviour<Player>, ISaveable
 {
-    private PlayerStateMachine playerStateMachine;
+    [field: Header("Stats")]
+    [field: SerializeField] public float Experience { get; private set; } = 0;
 
     protected override void Awake()
     {
         base.Awake();
 
-        playerStateMachine = GetComponent<PlayerStateMachine>();
-
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void GainExperience(float XP)
+    {
+        Experience += XP;
+    }
+
+    public object CaptureState()
+    {
+        return Experience;
+    }
+
+    public void RestoreState(object state)
+    {
+        Experience = (float)state;
     }
 }

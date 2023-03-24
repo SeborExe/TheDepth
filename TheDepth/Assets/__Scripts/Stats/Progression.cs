@@ -1,29 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "Progression", menuName = "ProgressionSO")]
 public class Progression : ScriptableObject
 {
-    [SerializeField] private ProgressionCharacterClass[] characterClasses;
+    [SerializeField] private List<ProgressionCharacterClass> characterClasses;
+
+    private Dictionary<CharacterClass, ProgressionCharacterClass> characterClassDict;
+
+    private void OnEnable()
+    {
+        characterClassDict = characterClasses.ToDictionary(x => x.characterClass, x => x);
+    }
 
     [System.Serializable]
     class ProgressionCharacterClass
     {
         public CharacterClass characterClass;
-        public float[] health;
+        public ProgressionStat[] stats;
     }
 
-    public float GetHealth(CharacterClass characterClass, int level)
+    [System.Serializable]
+    class ProgressionStat
     {
-        foreach (ProgressionCharacterClass progressionClass in characterClasses)
-        {
-            if (progressionClass.characterClass == characterClass)
-            {
-                return progressionClass.health[level - 1];
-            }
-        }
+        public Stat stat;
+        public float[] levels;
+    }
 
-        return 1;
+    public float GetStat(Stat stat, CharacterClass characterClass, int level)
+    {
+        if (!characterClassDict.ContainsKey(characterClass)) return 1;
+
+        var progressionClass = characterClassDict[characterClass];
+
+        var progressionStat = progressionClass.stats.FirstOrDefault(x => x.stat == stat && x.levels.Length >= level);
+        if (progressionStat == null) return 1;
+
+        return progressionStat.levels[level - 1];
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using static Cinemachine.DocumentationSortingAttribute;
 
 [CreateAssetMenu(fileName = "Progression", menuName = "ProgressionSO")]
 public class Progression : ScriptableObject
@@ -39,5 +40,17 @@ public class Progression : ScriptableObject
         if (progressionStat == null) return 1;
 
         return progressionStat.levels[level - 1];
+    }
+
+    public int GetLevel(Stat stat, CharacterClass characterClass)
+    {
+        if (!characterClassDict.ContainsKey(characterClass)) return 1;
+
+        var progressionClass = characterClassDict[characterClass];
+
+        var progressionStat = progressionClass.stats.FirstOrDefault(x => x.stat == stat);
+        if (progressionStat == null) return 1;
+
+        return progressionStat.levels.Length;
     }
 }

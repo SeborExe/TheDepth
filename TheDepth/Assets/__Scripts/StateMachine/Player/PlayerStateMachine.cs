@@ -9,6 +9,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public ForceReciver ForceReciver { get; private set; }
     public Animator Animator { get; private set; }
     public Health Health { get; private set; }
+    public Player Player { get; private set; }
     public BaseStats BaseStats { get; private set; }
     [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
@@ -29,13 +30,14 @@ public class PlayerStateMachine : StateMachine, ISaveable
         Animator = GetComponentInChildren<Animator>();
         Health = GetComponent<Health>();
         BaseStats = GetComponent<BaseStats>();
+        Player = GetComponent<Player>();
     }
 
     private void Start()
     {
         InitializeWeapon();
-        Health.Initialize(BaseStats);
-        PlayerStatsDisplay.Instance.InitializeUI(Health);
+        Health.Initialize();
+        PlayerStatsDisplay.Instance.InitializeUI(Player);
 
         SwitchState(new PlayerMoveState(this));
     }
@@ -50,6 +52,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
         Health.OnDie -= Health_OnDie;
+        PlayerStatsDisplay.Instance.UnSubscribeEvent();
     }
 
     private void InitializeWeapon()

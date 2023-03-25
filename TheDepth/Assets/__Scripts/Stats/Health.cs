@@ -19,16 +19,29 @@ public class Health : MonoBehaviour, ISaveable
     private Vector3 attackPosition;
     private GameObject ragdoll;
 
+    private float healthAddedWhenLevelUp = 100f;
+
     private void Awake()
     {
         animatorController = GetComponentInChildren<AnimatorController>();
         baseStats = GetComponent<BaseStats>();
     }
 
-    public void Initialize(BaseStats baseStats)
+    public void Initialize()
     {
-        health = baseStats.GetStat(Stat.Health);
-        MaxHealth = baseStats.GetStat(Stat.Health);
+        health = GetMaxHealth();
+        MaxHealth = GetMaxHealth();
+    }
+
+    public void HealthOnLevelUp()
+    {
+        MaxHealth = GetMaxHealth();
+        health += healthAddedWhenLevelUp;
+    }
+
+    public float GetMaxHealth()
+    {
+        return baseStats.GetStat(Stat.Health);
     }
 
     public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)

@@ -19,5 +19,6 @@ public enum CharacterClass
 public enum Stat
 {
     Health,
-    ExperienceReward
+    ExperienceReward,
+    ExperienceToLevelUp,
 }

@@ -2,34 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStatsDisplay : SingletonMonobehaviour<PlayerStatsDisplay>
+public class PlayerStatsDisplay : MonoBehaviour
 {
+    public static PlayerStatsDisplay Instance;
+
+    private Player player;
     private Health health;
 
     [Header("Health")]
     [SerializeField] private Image healthImage;
     [SerializeField] private TMP_Text healthText;
-    private float maxHealth;
 
-    protected override void Awake()
+    [Header("Level")]
+    [SerializeField] private Image experienceImage;
+    [SerializeField] private TMP_Text experienceText;
+    [SerializeField] private TMP_Text levelText;
+
+    private void Awake()
     {
-        base.Awake();
+        Instance = this;
     }
 
-    public void InitializeUI(Health health)
+    public void InitializeUI(Player player)
     {
-        this.health = health;
+        this.player = player;
+        health = player.GetComponent<Health>();
 
         health.OnTakeDamage += PlayerStatsDisplay_OnTakeDamage;
-        UpdateHealthUI();
+        player.OnExperienceGained += Player_OnExperienceGained;
 
-        maxHealth = health.MaxHealth;
+        UpdateHealthUI();
+        UpdateLevelUI();
     }
 
-    private void OnDisable()
+    public void UnSubscribeEvent()
     {
         health.OnTakeDamage -= PlayerStatsDisplay_OnTakeDamage;
     }
@@ -39,11 +49,31 @@ public class PlayerStatsDisplay : SingletonMonobehaviour<PlayerStatsDisplay>
         UpdateHealthUI();
     }
 
+    private void Player_OnExperienceGained()
+    {
+        UpdateHealthUI();
+        UpdateLevelUI();
+    }
+
     private void UpdateHealthUI()
     {
         float healthAmount = health.GetHealth();
+        float maxHealth = health.GetMaxHealth();
 
         healthImage.fillAmount = healthAmount / maxHealth;
         healthText.text = healthAmount.ToString("F1");
+    }
+
+    private void UpdateLevelUI()
+    {
+        float currentXP = player.Experience;
+        float XPToLevelUp = player.GetExperienceToLevelUp();
+        float XPToPreviousLevel = player.GetExperienceToPreciousLevel();
+        int currentLevel = player.GetLevel();
+
+        experienceImage.fillAmount = (currentXP - XPToPreviousLevel) / XPToLevelUp;
+        experienceText.text = $"{currentXP} / {XPToLevelUp}";
+
+        levelText.text = $"Level: {currentLevel}";
     }
 }

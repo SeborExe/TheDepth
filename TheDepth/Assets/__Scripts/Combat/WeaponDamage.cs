@@ -9,6 +9,7 @@ public class WeaponDamage : MonoBehaviour
     private List<Collider> alreadyColliderWith = new List<Collider>();
     private float damage;
     private int knockback;
+    private bool hasImpact;
 
     private MeshCollider meshCollider;
     private MeshFilter meshFilter;
@@ -36,7 +37,7 @@ public class WeaponDamage : MonoBehaviour
 
         if (other.TryGetComponent(out Health health))
         {
-            health.Dealdamage(damage, myCollider.gameObject, other.ClosestPoint(transform.position));
+            health.Dealdamage(damage, myCollider.gameObject, other.ClosestPoint(transform.position), hasImpact);
             alreadyColliderWith.Add(other);
         }
 
@@ -47,9 +48,10 @@ public class WeaponDamage : MonoBehaviour
     }
     
 
-    public void SetAttack(float damage, int knockback)
+    public void SetAttack(float damage, int knockback, bool hasImpact)
     {
         this.damage = damage;
         this.knockback = knockback;
+        this.hasImpact = hasImpact;
     }
 }

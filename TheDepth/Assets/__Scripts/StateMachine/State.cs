@@ -26,9 +26,9 @@ public abstract class State
         }
     }
 
-    protected void SetDamage(WeaponSO currentWeapon, WeaponDamage weaponDamage, int knockback)
+    protected void SetDamage(WeaponSO currentWeapon, WeaponDamage weaponDamage, int knockback, bool hasImpact)
     {
         float damage = Random.Range(currentWeapon.minDamage, currentWeapon.maxDamage);
-        weaponDamage.SetAttack(damage, knockback);
+        weaponDamage.SetAttack(damage, knockback, hasImpact);
     }
 }

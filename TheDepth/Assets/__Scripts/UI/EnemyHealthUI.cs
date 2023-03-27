@@ -32,7 +32,7 @@ public class EnemyHealthUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void Health_OnTakeDamage(GameObject obj)
+    private void Health_OnTakeDamage(GameObject obj, bool hasImpact)
     {
         UpdateHealthUI();
     }

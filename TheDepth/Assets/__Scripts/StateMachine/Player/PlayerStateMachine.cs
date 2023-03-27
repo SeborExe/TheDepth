@@ -37,7 +37,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     {
         InitializeWeapon();
         Health.Initialize();
-        PlayerStatsDisplay.Instance.InitializeUI(Player);
+        MainGameCanvas.Instance.PlayerStatsDisplay.InitializeUI(Player);
 
         SwitchState(new PlayerMoveState(this));
     }
@@ -52,7 +52,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
         Health.OnDie -= Health_OnDie;
-        PlayerStatsDisplay.Instance.UnSubscribeEvent();
+        MainGameCanvas.Instance.PlayerStatsDisplay.UnSubscribeEvent();
     }
 
     private void InitializeWeapon()
@@ -65,9 +65,12 @@ public class PlayerStateMachine : StateMachine, ISaveable
         WeaponLogic.transform.rotation = weapon.rotation;
     }
 
-    private void Health_OnTakeDamage(GameObject sender)
+    private void Health_OnTakeDamage(GameObject sender, bool hasImpact)
     {
-        SwitchState(new PlayerImpactState(this));
+        if (hasImpact)
+        {
+            SwitchState(new PlayerImpactState(this));
+        }
     }
 
     private void Health_OnDie()

@@ -8,8 +8,6 @@ using UnityEngine.UI;
 
 public class PlayerStatsDisplay : MonoBehaviour
 {
-    public static PlayerStatsDisplay Instance;
-
     private Player player;
     private Health health;
 
@@ -21,11 +19,6 @@ public class PlayerStatsDisplay : MonoBehaviour
     [SerializeField] private Image experienceImage;
     [SerializeField] private TMP_Text experienceText;
     [SerializeField] private TMP_Text levelText;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     public void InitializeUI(Player player)
     {
@@ -44,7 +37,7 @@ public class PlayerStatsDisplay : MonoBehaviour
         health.OnTakeDamage -= PlayerStatsDisplay_OnTakeDamage;
     }
 
-    private void PlayerStatsDisplay_OnTakeDamage(GameObject sender)
+    private void PlayerStatsDisplay_OnTakeDamage(GameObject sender, bool hasImpact)
     {
         UpdateHealthUI();
     }

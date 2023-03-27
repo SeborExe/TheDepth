@@ -110,9 +110,15 @@ public class EnemyStateMachine : StateMachine, ISaveable
         WeaponLogic.transform.rotation = weapon.rotation;
     }
 
-    private void Health_OnTakeDamage(GameObject sender)
+    private void Health_OnTakeDamage(GameObject sender, bool hasImpact)
     {
-        SwitchState(new EnemyImpactState(this, sender));
+        if (hasImpact || Player == null)
+        {
+            SwitchState(new EnemyImpactState(this, sender));
+            return;
+        }
+
+        ChangePlayerDetection(sender.GetComponent<Health>());
     }
 
     private void Health_OnDie()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, ISaveable
 {
-    public event Action<GameObject> OnTakeDamage;
+    public event Action<GameObject, bool> OnTakeDamage;
     public event Action OnDie;
 
     public float MaxHealth { get; private set; }
@@ -44,14 +44,14 @@ public class Health : MonoBehaviour, ISaveable
         return baseStats.GetStat(Stat.Health);
     }
 
-    public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)
+    public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition, bool hasImpact)
     {
         if (health <= 0) { return; }
         if (animatorController.IsImmune) { return; }
         if (gameObject.tag == sender.tag) { return; }
 
         health = Mathf.Max(health - damage, 0);
-        OnTakeDamage?.Invoke(sender);
+        OnTakeDamage?.Invoke(sender, hasImpact);
 
         this.attackPosition = attackPosition;
 

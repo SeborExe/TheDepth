@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainGameCanvas : SingletonMonobehaviour<MainGameCanvas>
 {
+    [field: SerializeField] public PlayerStatsDisplay PlayerStatsDisplay { get; private set; }
+
     protected override void Awake()
     {
         base.Awake();

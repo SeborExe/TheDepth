@@ -19,7 +19,7 @@ public class Health : MonoBehaviour, ISaveable
     private Vector3 attackPosition;
     private GameObject ragdoll;
 
-    private float healthAddedWhenLevelUp = 100f;
+    private float healthPercentRegenerate = 40f;
 
     private void Awake()
     {
@@ -36,7 +36,9 @@ public class Health : MonoBehaviour, ISaveable
     public void HealthOnLevelUp()
     {
         MaxHealth = GetMaxHealth();
-        health += healthAddedWhenLevelUp;
+
+        float healthToRegenerate = GetMaxHealth() * (healthPercentRegenerate / 100f);
+        health += healthToRegenerate;
     }
 
     public float GetMaxHealth()

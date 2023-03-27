@@ -1297,12 +1297,12 @@ PrefabInstance:
     - target: {fileID: 406423386500960131, guid: 48d0750c81616894888d921c99599edd,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000016015775
+      value: -0.000000016015772
       objectReference: {fileID: 0}
     - target: {fileID: 406423386500960131, guid: 48d0750c81616894888d921c99599edd,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.000000006289239
+      value: 0.0000000062892385
       objectReference: {fileID: 0}
     - target: {fileID: 406423386686360236, guid: 48d0750c81616894888d921c99599edd,
         type: 3}
@@ -1592,6 +1592,12 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8770935161536068708, guid: c504d792e1daef34dae2415bf1617cdd,
+        type: 3}
+      propertyPath: particlesOnLevelUp
+      value: 
+      objectReference: {fileID: 1624714524768532, guid: c9eb15264aa6c4348b00d5b9b3daab2a,
+        type: 3}
     - target: {fileID: 9152087188537198680, guid: c504d792e1daef34dae2415bf1617cdd,
         type: 3}
       propertyPath: uniqueIdentifier

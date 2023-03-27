@@ -10,6 +10,9 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     [field: Header("Stats")]
     [field: SerializeField] public float Experience { get; private set; } = 0;
 
+    [Header("Prefabs")]
+    [SerializeField] private GameObject particlesOnLevelUp;
+
     private BaseStats baseStats;
     private Health health;
 
@@ -40,6 +43,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         {
             baseStats.SetCurrentLevel(newLevel);
             health.HealthOnLevelUp();
+            LevelUpEffect();
         }
     }
 
@@ -65,6 +69,12 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
 
         return baseStats.GetStat(Stat.ExperienceToLevelUp, baseStats.GetLevel() - 1);
     }
+
+    private void LevelUpEffect()
+    {
+        Instantiate(particlesOnLevelUp, transform.position, Quaternion.identity);
+    }
+
 
     public object CaptureState()
     {

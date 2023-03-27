@@ -39,8 +39,11 @@ public class EnemyChasingState : EnemyBaseState
 
     public override void Exit()
     {
-        stateMachine.NavMeshAgent.ResetPath();
-        stateMachine.NavMeshAgent.velocity = Vector3.zero;
+        if (stateMachine.NavMeshAgent.enabled)
+        {
+            stateMachine.NavMeshAgent.ResetPath();
+            stateMachine.NavMeshAgent.velocity = Vector3.zero;
+        }
     }
 
     private void MoveToPlayer(float deltaTime)

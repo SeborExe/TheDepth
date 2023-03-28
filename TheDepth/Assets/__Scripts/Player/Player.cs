@@ -63,7 +63,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         return baseStats.GetStat(Stat.ExperienceToLevelUp);
     }
 
-    public float GetExperienceToPreciousLevel()
+    public float GetExperienceToPrevious()
     {
         if ((baseStats.GetLevel() - 1) == 0) { return 0; }
 

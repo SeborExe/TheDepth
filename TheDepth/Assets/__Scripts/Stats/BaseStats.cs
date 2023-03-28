@@ -18,12 +18,17 @@ public class BaseStats : MonoBehaviour
 
     public float GetStat(Stat stat)
     {
-        return progression.GetStat(stat, characterClass, GetLevel());
+        return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1 + GetPercentageModifier(stat) / 100);
     }
 
     public float GetStat(Stat stat, int level)
     {
-        return progression.GetStat(stat, characterClass, level);
+        return progression.GetStat(stat, characterClass, level) + GetAdditiveModifier(stat);
+    }
+
+    private float GetBaseStat(Stat stat)
+    {
+        return progression.GetStat(stat, characterClass, GetLevel());
     }
 
     public int GetLevel()
@@ -57,5 +62,33 @@ public class BaseStats : MonoBehaviour
         {
             return startingLevel;
         }
+    }
+
+    private float GetAdditiveModifier(Stat stat)
+    {
+        float total = 0;
+        foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+        {
+            foreach (float modifier in provider.GetAdditiveModifier(stat))
+            {
+                total += modifier;
+            }
+        }
+
+        return total;
+    }
+
+    private float GetPercentageModifier(Stat stat)
+    {
+        float total = 0;
+        foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+        {
+            foreach (float modifier in provider.GetPercentageModifier(stat))
+            {
+                total += modifier;
+            }
+        }
+
+        return total;
     }
 }

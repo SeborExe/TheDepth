@@ -15,7 +15,8 @@ public class EnemyAttackingState : EnemyBaseState
         int attackIndex = Random.Range(0, stateMachine.CurrentWeapon.attack.Length);
         attack = stateMachine.CurrentWeapon.attack[attackIndex];
 
-        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponLogic, stateMachine.CurrentWeapon.attack[attackIndex].Knockback, attack.HasImpact);
+        SetDamage(stateMachine.CurrentWeapon, stateMachine.WeaponLogic, stateMachine.CurrentWeapon.attack[attackIndex].Knockback, attack.HasImpact,
+            stateMachine.BaseStats);
 
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, attack.AnimationName, attack.TransitionDuration);
     }

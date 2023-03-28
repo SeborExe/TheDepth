@@ -103,7 +103,7 @@ public class EnemyStateMachine : StateMachine, ISaveable
     private void InitializeWeapon()
     {
         Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform).transform;
-        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh, GetAdditionalDamage());
+        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         EnemyAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
 
         WeaponLogic.transform.position = weapon.position;
@@ -142,11 +142,6 @@ public class EnemyStateMachine : StateMachine, ISaveable
     public void SetCurrentState(EnemyBaseState state)
     {
         CurrentState = state;
-    }
-
-    private float GetAdditionalDamage()
-    {
-        return BaseStats.GetStat(Stat.Damage);
     }
 
     private void OnDrawGizmosSelected()

@@ -58,7 +58,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     private void InitializeWeapon()
     {
         Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform).transform;
-        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh, GetAdditionalDamage());
+        WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         PlayerAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
 
         WeaponLogic.transform.position = weapon.position;
@@ -81,11 +81,6 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public void SetDodgeTime(float dodgeTime)
     {
         PreviousDodgeTime = dodgeTime;
-    }
-
-    private float GetAdditionalDamage()
-    {
-        return BaseStats.GetStat(Stat.Damage);
     }
 
     public object CaptureState()

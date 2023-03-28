@@ -11,15 +11,11 @@ public class WeaponDamage : MonoBehaviour
     private int knockback;
     private bool hasImpact;
 
-    private float additionalDamage;
-
     private MeshCollider meshCollider;
     private MeshFilter meshFilter;
 
-    public void Initialize(Mesh mesh, float additionalDamage)
+    public void Initialize(Mesh mesh)
     {
-        this.additionalDamage = additionalDamage;
-
         meshCollider = GetComponent<MeshCollider>();
         meshFilter = GetComponent<MeshFilter>();
 
@@ -54,7 +50,7 @@ public class WeaponDamage : MonoBehaviour
 
     public void SetAttack(float damage, int knockback, bool hasImpact)
     {
-        this.damage = damage + additionalDamage;
+        this.damage = damage;
         this.knockback = knockback;
         this.hasImpact = hasImpact;
     }

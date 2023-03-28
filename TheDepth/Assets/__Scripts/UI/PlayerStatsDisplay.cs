@@ -61,7 +61,7 @@ public class PlayerStatsDisplay : MonoBehaviour
     {
         float currentXP = player.Experience;
         float XPToLevelUp = player.GetExperienceToLevelUp();
-        float XPToPreviousLevel = player.GetExperienceToPreciousLevel();
+        float XPToPreviousLevel = player.GetExperienceToPrevious();
         int currentLevel = player.GetLevel();
 
         experienceImage.fillAmount = (currentXP - XPToPreviousLevel) / XPToLevelUp;

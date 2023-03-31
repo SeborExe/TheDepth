@@ -1,19 +1,25 @@
+using GameDevTV.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseStats : MonoBehaviour
+public class BaseStats : MonoBehaviour, ISaveable
 {
     [SerializeField, Range(1, 100)] private int startingLevel = 1;
     [SerializeField] private CharacterClass characterClass;
     [SerializeField] private Progression progression;
 
-    public int CurrentLevel { get; private set; } = 1;
+    private LazyValue<int> currentLevel;
+
+    private void Awake()
+    {
+        currentLevel = new LazyValue<int>(CalculateLevel);
+    }
 
     private void Start()
     {
-        CurrentLevel = CalculateLevel();
+        currentLevel.ForceInit();
     }
 
     public float GetStat(Stat stat)
@@ -33,12 +39,12 @@ public class BaseStats : MonoBehaviour
 
     public int GetLevel()
     {
-        return CurrentLevel;
+        return currentLevel.value;
     }
 
     public void SetCurrentLevel(int level)
     {
-        CurrentLevel = level;
+        currentLevel.value = level;
     }
 
     public int CalculateLevel()
@@ -90,5 +96,15 @@ public class BaseStats : MonoBehaviour
         }
 
         return total;
+    }
+
+    public object CaptureState()
+    {
+        return currentLevel;
+    }
+
+    public void RestoreState(object state)
+    {
+        currentLevel.value = (int)state;
     }
 }

@@ -36,7 +36,6 @@ public class PlayerStateMachine : StateMachine, ISaveable
     private void Start()
     {
         InitializeWeapon();
-        Health.Initialize();
         MainGameCanvas.Instance.PlayerStatsDisplay.InitializeUI(Player);
 
         SwitchState(new PlayerMoveState(this));
@@ -105,5 +104,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
         CharacterController.enabled = false;
         CharacterController.transform.rotation = ((SerializableTransform)data["transform"]).ToTransform().Rotation;
         CharacterController.enabled = true;
+
+        MainGameCanvas.Instance.PlayerStatsDisplay.InitializeUI(Player);
     }
 }

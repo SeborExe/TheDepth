@@ -39,7 +39,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     private void Player_OnExperienceGained()
     {
         int newLevel = baseStats.CalculateLevel();
-        if (newLevel > baseStats.CurrentLevel)
+        if (newLevel > baseStats.GetLevel())
         {
             baseStats.SetCurrentLevel(newLevel);
             health.HealthOnLevelUp();

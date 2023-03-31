@@ -18,7 +18,7 @@ public class EnemyHealthUI : MonoBehaviour
         health.OnDie += Health_OnDie;
 
         UpdateHealthUI();
-        maxHealth = health.MaxHealth;
+        maxHealth = health.GetMaxHealthValue();
     }
 
     private void OnDisable()

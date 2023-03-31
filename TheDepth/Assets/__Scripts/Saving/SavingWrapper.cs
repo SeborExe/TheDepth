@@ -35,6 +35,11 @@ public class SavingWrapper : SingletonMonobehaviour<SavingWrapper>
         {
             Save();
         }
+
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            Delete();
+        }
     }
 
     public void Load()
@@ -45,5 +50,10 @@ public class SavingWrapper : SingletonMonobehaviour<SavingWrapper>
     public void Save()
     {
         savingSystem.Save(dafaulcSaveFile);
+    }
+
+    public void Delete()
+    {
+        savingSystem.Delete(dafaulcSaveFile);
     }
 }

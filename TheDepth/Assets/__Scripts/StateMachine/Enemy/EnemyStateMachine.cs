@@ -68,9 +68,8 @@ public class EnemyStateMachine : StateMachine, ISaveable
         startRotation = transform.rotation;
 
         InitializeWeapon();
-        Health.Initialize();
 
-        if (EnemyHealthUI.gameObject.activeSelf == false) { EnemyHealthUI.gameObject.SetActive(true); }
+        if (EnemyHealthUI.gameObject.activeSelf == false) { EnemyHealthUI.gameObject.SetActive(false); }
         EnemyHealthUI.InitializeUI(Health);
 
         SetStartingState();

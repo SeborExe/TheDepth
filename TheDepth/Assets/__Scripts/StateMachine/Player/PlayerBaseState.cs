@@ -6,6 +6,8 @@ public abstract class PlayerBaseState : State
 {
     protected PlayerStateMachine stateMachine;
 
+    private float slowdownWhenRoll = 10f;
+
     public PlayerBaseState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
@@ -19,6 +21,28 @@ public abstract class PlayerBaseState : State
     protected void Move(float deltaTime)
     {
         Move(Vector3.zero, deltaTime);
+    }
+
+    protected void CheckFormMove(float deltaTime, float slowDown = 1f)
+    {
+        Vector3 movement = CalculateMovement();
+        float speed = movement.magnitude * (stateMachine.MovementSpeed / slowDown);
+
+        if (stateMachine.PlayerAnimator.IsInteracting)
+        {
+            movement /= slowdownWhenRoll;
+        }
+
+        Move(movement * stateMachine.MovementSpeed, deltaTime);
+
+        if (movement.magnitude == 0f)
+        {
+            stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(0f, deltaTime);
+            return;
+        }
+
+        stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(speed, deltaTime);
+        FaceMovementDirection(movement, deltaTime);
     }
 
     protected Vector3 CalculateMovement()

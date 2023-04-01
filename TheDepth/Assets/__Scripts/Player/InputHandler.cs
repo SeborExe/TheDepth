@@ -11,6 +11,7 @@ public class InputHandler : MonoBehaviour
     public event Action OnRoll;
 
     public bool IsAttacking { get; private set; }
+    public bool IsAiming { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +24,9 @@ public class InputHandler : MonoBehaviour
 
         playerInputActions.Player.Attack.performed += Attack_performed;
         playerInputActions.Player.Attack.canceled += Attack_canceled;
+
+        playerInputActions.Player.Aim.performed += Aim_performed;
+        playerInputActions.Player.Aim.canceled += Aim_canceled;
 
         playerInputActions.Player.Roll.started += Roll_started;
 
@@ -74,6 +78,16 @@ public class InputHandler : MonoBehaviour
     private void Attack_canceled(InputAction.CallbackContext obj)
     {
         IsAttacking = false;
+    }
+
+    private void Aim_performed(InputAction.CallbackContext obj)
+    {
+        IsAiming = true;
+    }
+
+    private void Aim_canceled(InputAction.CallbackContext obj)
+    {
+        IsAiming = false;
     }
 
     private void Roll_started(InputAction.CallbackContext obj)

@@ -9,6 +9,8 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public ForceReciver ForceReciver { get; private set; }
     public Animator Animator { get; private set; }
     public Health Health { get; private set; }
+    public Player Player { get; private set; }
+    public BaseStats BaseStats { get; private set; }
     [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
@@ -27,11 +29,15 @@ public class PlayerStateMachine : StateMachine, ISaveable
         ForceReciver = GetComponent<ForceReciver>();
         Animator = GetComponentInChildren<Animator>();
         Health = GetComponent<Health>();
+        BaseStats = GetComponent<BaseStats>();
+        Player = GetComponent<Player>();
     }
 
     private void Start()
     {
         InitializeWeapon();
+        MainGameCanvas.Instance.PlayerStatsDisplay.InitializeUI(Player);
+
         SwitchState(new PlayerMoveState(this));
     }
 
@@ -45,6 +51,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     {
         Health.OnTakeDamage -= Health_OnTakeDamage;
         Health.OnDie -= Health_OnDie;
+        MainGameCanvas.Instance.PlayerStatsDisplay.UnSubscribeEvent();
     }
 
     private void InitializeWeapon()
@@ -57,9 +64,12 @@ public class PlayerStateMachine : StateMachine, ISaveable
         WeaponLogic.transform.rotation = weapon.rotation;
     }
 
-    private void Health_OnTakeDamage(GameObject sender)
+    private void Health_OnTakeDamage(GameObject sender, bool hasImpact)
     {
-        SwitchState(new PlayerImpactState(this));
+        if (hasImpact)
+        {
+            SwitchState(new PlayerImpactState(this));
+        }
     }
 
     private void Health_OnDie()
@@ -81,18 +91,21 @@ public class PlayerStateMachine : StateMachine, ISaveable
         return data;
     }
 
-    public async void RestoreState(object state)
+    public void RestoreState(object state)
     {
         Dictionary<string, object> data = (Dictionary<string, object>)state;
 
         ForceReciver.Reset();
 
-        await Loader.LoadScene((string)data["scene"]);
+        //await Loader.LoadSceneAsyc((string)data["scene"]);
 
         //Somethimes player is loading under ground. Change in future.
-        CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position + new Vector3(0, 6f, 0);
+        //CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position + new Vector3(0, 6f, 0);
+        CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position;
         CharacterController.enabled = false;
         CharacterController.transform.rotation = ((SerializableTransform)data["transform"]).ToTransform().Rotation;
         CharacterController.enabled = true;
+
+        MainGameCanvas.Instance.PlayerStatsDisplay.InitializeUI(Player);
     }
 }

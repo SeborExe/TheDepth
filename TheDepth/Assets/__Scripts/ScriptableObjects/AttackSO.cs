@@ -12,4 +12,5 @@ public class AttackSO : ScriptableObject
     public float ForceTime;
     public float Force;
     public int Knockback;
+    public bool HasImpact;
 }

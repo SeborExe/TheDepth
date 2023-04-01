@@ -1,3 +1,4 @@
+using GameDevTV.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,43 +6,69 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, ISaveable
 {
-    public event Action<GameObject> OnTakeDamage;
+    public event Action<GameObject, bool> OnTakeDamage;
     public event Action OnDie;
 
-    [SerializeField] private float maxHealth = 100f;
-
-    public bool IsDead => health == 0;
+    public bool IsDead => health.value == 0;
 
     private AnimatorController animatorController;
+    private BaseStats baseStats;
 
-    private float health;
+    private LazyValue<float> health;
+    private LazyValue<float> maxHealth;
+
     private Vector3 attackPosition;
     private GameObject ragdoll;
+
+    private float healthPercentRegenerate = 40f;
 
     private void Awake()
     {
         animatorController = GetComponentInChildren<AnimatorController>();
+        baseStats = GetComponent<BaseStats>();
+
+        health = new LazyValue<float>(GetInitialHealth);
+        maxHealth = new LazyValue<float>(GetInitialHealth);
     }
 
     private void Start()
     {
-        health = maxHealth;
+        health.ForceInit();
+    }
+     
+    private float GetInitialHealth()
+    {
+        return GetMaxHealth();
     }
 
-    public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition)
+    public float GetMaxHealth()
     {
-        if (health <= 0) { return; }
+        return baseStats.GetStat(Stat.Health);
+    }
+
+    public void HealthOnLevelUp()
+    {
+        maxHealth.value = GetMaxHealth();
+
+        float healthToRegenerate = GetMaxHealth() * (healthPercentRegenerate / 100f);
+        health.value += healthToRegenerate;
+    }
+
+    public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition, bool hasImpact)
+    {
+        if (health.value <= 0) { return; }
         if (animatorController.IsImmune) { return; }
         if (gameObject.tag == sender.tag) { return; }
 
-        health = Mathf.Max(health - damage, 0);
-        OnTakeDamage?.Invoke(sender);
+        health.value = Mathf.Max(health.value - damage, 0);
+        OnTakeDamage?.Invoke(sender, hasImpact);
 
         this.attackPosition = attackPosition;
 
-        if (health == 0)
+        if (health.value == 0)
         {
             OnDie?.Invoke();
+            AwardExperiene(sender);
         }
     }
 
@@ -91,21 +118,45 @@ public class Health : MonoBehaviour, ISaveable
         }
     }
 
+    private void AwardExperiene(GameObject sender)
+    {
+        if (sender.TryGetComponent(out Player player))
+        {
+            player.GainExperience(baseStats.GetStat(Stat.ExperienceReward));
+        }
+    }
+
+    public float GetHealth()
+    {
+        return health.value;
+    }
+
+    public float GetMaxHealthValue()
+    {
+        return maxHealth.value;
+    }
+
     public object CaptureState()
     {
-        return health;
+        return health.value;
     }
 
     public void RestoreState(object state)
     {
-        health = (float)state;
-        if (health > 0)
+        health.value = (float)state;
+        if (health.value > 0)
         {
             transform.GetChild(0).gameObject.SetActive(true);
             if (ragdoll != null)
             {
                 Destroy(ragdoll);
             }
+        }
+        else
+        {
+            OnDie?.Invoke();
+            Destroy(ragdoll);
+            transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 }

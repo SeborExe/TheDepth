@@ -20,7 +20,7 @@ public static class Loader
         SceneManager.LoadSceneAsync(targetScene.ToString());
     }
 
-    public static async Task LoadScene(string scene)
+    public static async Task LoadSceneAsync(string scene)
     {
         SceneManager.LoadSceneAsync(scene.ToString());
         await Task.Delay(timeToWaitAfterLoadScene);

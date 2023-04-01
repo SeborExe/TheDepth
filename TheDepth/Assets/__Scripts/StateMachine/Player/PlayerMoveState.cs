@@ -52,7 +52,7 @@ public class PlayerMoveState : PlayerBaseState
 
     private void CheckForAiming()
     {
-        if (stateMachine.InputHandler.IsAiming)
+        if (stateMachine.InputHandler.IsAiming && stateMachine.CurrentWeapon.isDistanceWeapon)
         {
             stateMachine.SwitchState(new PlayerAimingState(stateMachine));
             return;

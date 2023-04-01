@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.08145866, g: 0.124068536, b: 0.20704864, a: 1}
+  m_IndirectSpecularColor: {r: 0.16197222, g: 0.21226946, b: 0.2741313, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -903,6 +903,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5655154948584715212}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1102576150 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5655154949207134207, guid: c504d792e1daef34dae2415bf1617cdd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5655154948584715212}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1445503937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1372,6 +1378,37 @@ Transform:
   m_Father: {fileID: 274744233}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2099470544
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2099470545}
+  m_Layer: 0
+  m_Name: LeftWeaponTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2099470545
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099470544}
+  m_LocalRotation: {x: -1, y: 0.000000048312412, z: 0.000000011175867, w: 0.00000021121168}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1102576150}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &406423387542915808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1586,6 +1623,20 @@ PrefabInstance:
       propertyPath: <WeaponLogic>k__BackingField
       value: 
       objectReference: {fileID: 139152948}
+    - target: {fileID: 998295755, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
+      propertyPath: <LeftWeaponTransform>k__BackingField
+      value: 
+      objectReference: {fileID: 2099470545}
+    - target: {fileID: 998295755, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
+      propertyPath: <BaseOverrideController>k__BackingField
+      value: 
+      objectReference: {fileID: 22100000, guid: 70f46b94df8028f478dfdb07a9425c47,
+        type: 2}
+    - target: {fileID: 998295755, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
+      propertyPath: <AimingOverrideController>k__BackingField
+      value: 
+      objectReference: {fileID: 22100000, guid: 1da8e9064a861eb43b9f3a622e0a5ed6,
+        type: 2}
     - target: {fileID: 1910176879, guid: c504d792e1daef34dae2415bf1617cdd, type: 3}
       propertyPath: m_LocalScale.x
       value: 100

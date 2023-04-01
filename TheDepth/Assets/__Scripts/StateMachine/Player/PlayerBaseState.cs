@@ -33,7 +33,7 @@ public abstract class PlayerBaseState : State
             movement /= slowdownWhenRoll;
         }
 
-        Move(movement * stateMachine.MovementSpeed, deltaTime);
+        Move(movement * (stateMachine.MovementSpeed / slowDown), deltaTime);
 
         if (movement.magnitude == 0f)
         {

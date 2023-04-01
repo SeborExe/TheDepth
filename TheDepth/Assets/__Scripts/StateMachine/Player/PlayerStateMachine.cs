@@ -11,15 +11,22 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public Health Health { get; private set; }
     public Player Player { get; private set; }
     public BaseStats BaseStats { get; private set; }
-    [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public float MovementSpeed { get; private set; }
     [field: SerializeField] public float RotationSpeed { get; private set; }
     [field: SerializeField, HideInInspector] public float PreviousDodgeTime { get; private set; } = Mathf.NegativeInfinity;
     [field: SerializeField] public float DodgeCoolDown { get; private set; }
     [field: SerializeField] public float TimeWhilePlayerIsAbleToRotate { get; private set; }
+
+    [field: Header("Weapons")]
     [field: SerializeField] public WeaponSO CurrentWeapon { get; private set; }
+    [field: SerializeField] public WeaponDamage WeaponLogic { get; private set; }
     [field: SerializeField] public Transform WeaponTransform { get; private set; }
+    [field: SerializeField] public Transform LeftWeaponTransform { get; private set; }
     [field: SerializeField] public Transform Ragdoll { get; private set; }
+
+    [field: Header("Animation Overrides")]
+    [field: SerializeField] public AnimatorOverrideController AimingOverrideController { get; private set; }
+    [field: SerializeField] public AnimatorOverrideController BaseOverrideController { get; private set; }
 
     private void Awake()
     {
@@ -56,7 +63,15 @@ public class PlayerStateMachine : StateMachine, ISaveable
 
     private void InitializeWeapon()
     {
-        Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, WeaponTransform).transform;
+        bool isRightHanded = CurrentWeapon.isRightHanded;
+        Transform weaponTransform = WeaponTransform;
+
+        if (!isRightHanded)
+        {
+            weaponTransform = LeftWeaponTransform;
+        }
+
+        Transform weapon = Instantiate(CurrentWeapon.weaponPrefab.weaponGameObject, weaponTransform).transform;
         WeaponLogic.Initialize(CurrentWeapon.weaponPrefab.weaponMesh);
         PlayerAnimator.SetOverrideAnimation(Animator, CurrentWeapon.animatorOverride);
 

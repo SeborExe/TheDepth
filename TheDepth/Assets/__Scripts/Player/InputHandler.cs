@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     private PlayerInputActions playerInputActions;
 
     public event Action OnRoll;
+    public event Action OnAttack;
 
     public bool IsAttacking { get; private set; }
     public bool IsAiming { get; private set; }
@@ -24,6 +25,7 @@ public class InputHandler : MonoBehaviour
 
         playerInputActions.Player.Attack.performed += Attack_performed;
         playerInputActions.Player.Attack.canceled += Attack_canceled;
+        playerInputActions.Player.Attack.started += Attack_started; ;
 
         playerInputActions.Player.Aim.performed += Aim_performed;
         playerInputActions.Player.Aim.canceled += Aim_canceled;
@@ -68,6 +70,11 @@ public class InputHandler : MonoBehaviour
     public Vector3 GetLookRotation()
     {
         return playerInputActions.Player.Look.ReadValue<Vector2>();
+    }
+
+    private void Attack_started(InputAction.CallbackContext obj)
+    {
+        OnAttack?.Invoke();
     }
 
     private void Attack_performed(InputAction.CallbackContext obj)

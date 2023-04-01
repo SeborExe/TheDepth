@@ -31,11 +31,10 @@ public class Portal : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        Loader.Load(scene);
-
         //Save current Level
-        //SavingWrapper.Instance.Save();
+        SavingWrapper.Instance.Save();
 
+        Loader.Load(scene);
         SceneManager.LoadSceneAsync(Scenes.LoadingScene.ToString());
 
         while (SceneManager.GetActiveScene().name != scene.ToString())
@@ -46,13 +45,13 @@ public class Portal : MonoBehaviour
         await Task.Yield();
 
         //Load current Level
-        //SavingWrapper.Instance.Load();
+        SavingWrapper.Instance.Load();
 
         Portal otherPortal = GetOtherPortal();
         UpdatePlayer(otherPortal);
 
         //Save current Level
-        //SavingWrapper.Instance.Save();
+        SavingWrapper.Instance.Save();
 
         Destroy(gameObject);
     }

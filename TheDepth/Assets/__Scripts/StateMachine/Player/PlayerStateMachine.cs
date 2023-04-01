@@ -91,16 +91,17 @@ public class PlayerStateMachine : StateMachine, ISaveable
         return data;
     }
 
-    public async void RestoreState(object state)
+    public void RestoreState(object state)
     {
         Dictionary<string, object> data = (Dictionary<string, object>)state;
 
         ForceReciver.Reset();
 
-        await Loader.LoadScene((string)data["scene"]);
+        //await Loader.LoadSceneAsyc((string)data["scene"]);
 
         //Somethimes player is loading under ground. Change in future.
-        CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position + new Vector3(0, 6f, 0);
+        //CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position + new Vector3(0, 6f, 0);
+        CharacterController.transform.position = ((SerializableTransform)data["transform"]).ToTransform().Position;
         CharacterController.enabled = false;
         CharacterController.transform.rotation = ((SerializableTransform)data["transform"]).ToTransform().Rotation;
         CharacterController.enabled = true;

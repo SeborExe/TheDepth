@@ -35,23 +35,16 @@ public class Health : MonoBehaviour, ISaveable
     {
         health.ForceInit();
     }
-
+     
     private float GetInitialHealth()
     {
         return GetMaxHealth();
     }
 
-    /*
-    public void Initialize()
+    public float GetMaxHealth()
     {
-        if (health < 0)
-        {
-            health = GetMaxHealth();
-        }
-
-        MaxHealth = GetMaxHealth();
+        return baseStats.GetStat(Stat.Health);
     }
-    */
 
     public void HealthOnLevelUp()
     {
@@ -59,11 +52,6 @@ public class Health : MonoBehaviour, ISaveable
 
         float healthToRegenerate = GetMaxHealth() * (healthPercentRegenerate / 100f);
         health.value += healthToRegenerate;
-    }
-
-    public float GetMaxHealth()
-    {
-        return baseStats.GetStat(Stat.Health);
     }
 
     public void Dealdamage(float damage, GameObject sender, Vector3 attackPosition, bool hasImpact)
@@ -166,6 +154,8 @@ public class Health : MonoBehaviour, ISaveable
         }
         else
         {
+            OnDie?.Invoke();
+            Destroy(ragdoll);
             transform.GetChild(0).gameObject.SetActive(false);
         }
     }

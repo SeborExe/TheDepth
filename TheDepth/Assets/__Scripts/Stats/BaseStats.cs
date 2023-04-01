@@ -100,7 +100,7 @@ public class BaseStats : MonoBehaviour, ISaveable
 
     public object CaptureState()
     {
-        return currentLevel;
+        return currentLevel.value;
     }
 
     public void RestoreState(object state)

@@ -13,6 +13,7 @@ public class CameraController : SingletonMonobehaviour<CameraController>
 
     private Vector2 vectorRotation;
     private float zoomValue;
+    private Transform currentFocusPoint;
 
     protected override void Awake()
     {
@@ -26,8 +27,7 @@ public class CameraController : SingletonMonobehaviour<CameraController>
 
     private void Start()
     {
-        freeLookCamera.Follow = Player.Instance.transform;
-        freeLookCamera.LookAt = Player.Instance.transform;
+        ChangeFocusPoint(Player.Instance.transform);
     }
 
     private void Update()
@@ -43,6 +43,12 @@ public class CameraController : SingletonMonobehaviour<CameraController>
     void LateUpdate()
     {
         transform.LookAt(2 * transform.position - freeLookCamera.transform.position);
+    }
+
+    public void ChangeFocusPoint(Transform focusPoint)
+    {
+        freeLookCamera.Follow = focusPoint;
+        freeLookCamera.LookAt = focusPoint;
     }
 
     public void SetVectorRotation(Vector2 vectorRotation)

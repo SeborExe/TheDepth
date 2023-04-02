@@ -75,7 +75,6 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
         Instantiate(particlesOnLevelUp, transform.position, Quaternion.identity);
     }
 
-
     public object CaptureState()
     {
         return Experience;

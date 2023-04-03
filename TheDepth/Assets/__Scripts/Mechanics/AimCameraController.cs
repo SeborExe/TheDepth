@@ -7,32 +7,37 @@ using UnityEngine.UIElements;
 public class AimCameraController : SingletonMonobehaviour<AimCameraController>
 {
     [SerializeField] private GameObject followTransform;
+    [SerializeField] private float rotationPower = 3f;
+    [SerializeField] private float rotationLerp = 0.5f;
+    [SerializeField] private float speed = 1f;
 
-    private Vector2 _move;
-    private Vector2 _look;
+    private InputHandler inputHandler;
+
+    private Vector2 move;
+    private Vector2 look;
     private bool _aim;
 
-    public Vector3 nextPosition;
-    public Quaternion nextRotation;
-
-    public float rotationPower = 3f;
-    public float rotationLerp = 0.5f;
-
-    public float speed = 1f;
+    private Vector3 nextPosition;
+    private Quaternion nextRotation;
 
     protected override void Awake()
     {
         base.Awake();
+
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void Update()
     {
+        move = inputHandler.GetMovementVectorNormalized();
+        look = inputHandler.GetLookRotation();
+
         #region Player Based Rotation
 
         //Move the player based on the X input on the controller
         if (_aim)
         {
-            transform.rotation *= Quaternion.AngleAxis(_look.x * rotationPower, Vector3.up);
+            transform.rotation *= Quaternion.AngleAxis(look.x * rotationPower, Vector3.up);
         }
 
         #endregion
@@ -40,12 +45,12 @@ public class AimCameraController : SingletonMonobehaviour<AimCameraController>
         #region Follow Transform Rotation
 
         //Rotate the Follow Target transform based on the input
-        followTransform.transform.rotation *= Quaternion.AngleAxis(_look.x * rotationPower, Vector3.up);
+        followTransform.transform.rotation *= Quaternion.AngleAxis(look.x * rotationPower, Vector3.up);
 
         #endregion
 
         #region Vertical Rotation
-        followTransform.transform.rotation *= Quaternion.AngleAxis(_look.y * rotationPower, Vector3.left);
+        followTransform.transform.rotation *= Quaternion.AngleAxis(look.y * rotationPower, Vector3.left);
 
         var angles = followTransform.transform.localEulerAngles;
         angles.z = 0;
@@ -66,10 +71,9 @@ public class AimCameraController : SingletonMonobehaviour<AimCameraController>
         followTransform.transform.localEulerAngles = angles;
         #endregion
 
-
         nextRotation = Quaternion.Lerp(followTransform.transform.rotation, nextRotation, Time.deltaTime * rotationLerp);
 
-        if (_move.x == 0 && _move.y == 0)
+        if (move.x == 0 && move.y == 0)
         {
             nextPosition = transform.position;
 
@@ -85,7 +89,7 @@ public class AimCameraController : SingletonMonobehaviour<AimCameraController>
         }
 
         float moveSpeed = speed / 100f;
-        Vector3 position = (transform.forward * _move.y * moveSpeed) + (transform.right * _move.x * moveSpeed);
+        Vector3 position = (transform.forward * move.y * moveSpeed) + (transform.right * move.x * moveSpeed);
         nextPosition = transform.position + position;
 
 
@@ -101,12 +105,12 @@ public class AimCameraController : SingletonMonobehaviour<AimCameraController>
 
     public void SetMove(Vector2 _move)
     {
-        this._move = _move;
+        this.move = _move;
     }
 
     public void SetLook(Vector2 _look)
     {
-        this._look = _look;
+        this.look = _look;
     }
 
     public void SetAim(bool _aim)

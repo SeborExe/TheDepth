@@ -12,6 +12,9 @@ public class PlayerAimingState : PlayerBaseState
     public override void Enter()
     {
         stateMachine.PlayerAnimator.PlayAimingTree(stateMachine.Animator);
+
+        stateMachine.Animator.SetLayerWeight(1, 1);
+
         stateMachine.PlayerAnimator.SetOverrideAnimation(stateMachine.Animator, stateMachine.AimingOverrideController);
         MainGameCanvas.Instance.AimingUI.ChangeCrosshairVisibility(true);
 
@@ -35,6 +38,8 @@ public class PlayerAimingState : PlayerBaseState
     public override void Exit()
     {
         stateMachine.InputHandler.OnAttack -= InputHandler_OnAttack;
+
+        stateMachine.Animator.SetLayerWeight(1, 0);
 
         stateMachine.PlayerAnimator.SetOverrideAnimation(stateMachine.Animator, stateMachine.BaseOverrideController);
         MainGameCanvas.Instance.AimingUI.ChangeCrosshairVisibility(false);

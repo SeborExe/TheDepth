@@ -58,7 +58,6 @@ public class InputHandler : MonoBehaviour
     public Vector2 GetMovementVectorNormalized()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
-        AimCameraController.Instance.SetMove(inputVector);
         return inputVector;
     }
 
@@ -66,7 +65,6 @@ public class InputHandler : MonoBehaviour
     {
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
         CameraController.Instance.SetVectorRotation(inputVector);
-        AimCameraController.Instance.SetLook(inputVector);
     }
 
     public Vector3 GetLookRotation()

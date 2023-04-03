@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0057b9266def94d89c2fc1fa6fc62c, type: 3}
+  m_Name: Weapon_Bow
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 11400000, guid: d9bb74ed66be6df4085a85949ba097dd, type: 2}
+  isDistanceWeapon: 1
+  isRightHanded: 0
+  minDamage: 5
+  maxDamage: 9
+  animatorOverride: {fileID: 22100000, guid: 70f46b94df8028f478dfdb07a9425c47, type: 2}
+  attack: []
+  projectileSO: {fileID: 11400000, guid: ef4dc0d93f503b6449dbb606d51251a7, type: 2}
+  knockback: 2
+  force: 1
+  hasImpact: 1

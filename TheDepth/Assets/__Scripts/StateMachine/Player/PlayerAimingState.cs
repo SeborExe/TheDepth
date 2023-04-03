@@ -50,6 +50,7 @@ public class PlayerAimingState : PlayerBaseState
         if (!stateMachine.PlayerAnimator.IsInteracting)
         {
             stateMachine.PlayerAnimator.PlayTargetAnimation("Bow_Shoot", true);
+            stateMachine.FireProjectile();
         }
     }
 }

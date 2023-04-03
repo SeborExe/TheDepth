@@ -82,7 +82,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1056103343226571255}
-  m_Mesh: {fileID: -5434363053188234418, guid: cc9458b82051ab946b2685619751b31e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 409b403675423e64caf28689b0e8a394, type: 2}
 --- !u!1 &1398175233264486748
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +165,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1398175233264486748}
-  m_Mesh: {fileID: -5434363053188234418, guid: cc9458b82051ab946b2685619751b31e, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 409b403675423e64caf28689b0e8a394, type: 2}
 --- !u!1 &1398175234702782428
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 1398175234702782430}
   - component: {fileID: 1398175234702782425}
   - component: {fileID: -5822015906512641235}
+  - component: {fileID: 8037025703338601862}
   m_Layer: 0
   m_Name: Arrow Projectile
   m_TagString: Untagged
@@ -228,7 +229,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.03
+  m_Radius: 0.15
   m_Height: 0.65
   m_Direction: 2
   m_Center: {x: 0, y: 0.03, z: -0.34}
@@ -285,3 +286,17 @@ MonoBehaviour:
     m_DissipationDistance: 1000
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &8037025703338601862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398175234702782428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5d32671bfda3ca4c9852775422a2be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ProjectileSO>k__BackingField: {fileID: 11400000, guid: ef4dc0d93f503b6449dbb606d51251a7,
+    type: 2}

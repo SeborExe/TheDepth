@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -95,6 +96,29 @@ public class PlayerStateMachine : StateMachine, ISaveable
     public void SetDodgeTime(float dodgeTime)
     {
         PreviousDodgeTime = dodgeTime;
+    }
+
+    public void FireProjectile()
+    {
+        StartCoroutine(Fire());
+    }
+
+    private IEnumerator Fire()
+    {
+        Projectile projectile = Instantiate(CurrentWeapon.projectileSO.projectile);
+        projectile.transform.forward = Player.FollowTarget.transform.forward;
+        projectile.transform.position = Player.FollowTarget.transform.position + Player.FollowTarget.transform.forward;
+
+        yield return new WaitForSeconds(0.1f);
+
+        float damage = Random.Range(CurrentWeapon.minDamage, CurrentWeapon.maxDamage);
+
+        projectile.SetUpAndFire(
+            CharacterController,
+            projectile.ProjectileSO.damage + damage,
+            projectile.ProjectileSO.knockback + CurrentWeapon.knockback,
+            CurrentWeapon.hasImpact,
+            projectile.ProjectileSO.force + CurrentWeapon.force);
     }
 
     public object CaptureState()

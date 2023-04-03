@@ -58,6 +58,7 @@ public class InputHandler : MonoBehaviour
     public Vector2 GetMovementVectorNormalized()
     {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+        AimCameraController.Instance.SetMove(inputVector);
         return inputVector;
     }
 
@@ -65,6 +66,7 @@ public class InputHandler : MonoBehaviour
     {
         Vector2 inputVector = playerInputActions.Player.Look.ReadValue<Vector2>();
         CameraController.Instance.SetVectorRotation(inputVector);
+        AimCameraController.Instance.SetLook(inputVector);
     }
 
     public Vector3 GetLookRotation()
@@ -90,11 +92,13 @@ public class InputHandler : MonoBehaviour
     private void Aim_performed(InputAction.CallbackContext obj)
     {
         IsAiming = true;
+        AimCameraController.Instance.SetAim(true);
     }
 
     private void Aim_canceled(InputAction.CallbackContext obj)
     {
         IsAiming = false;
+        AimCameraController.Instance.SetAim(false);
     }
 
     private void Roll_started(InputAction.CallbackContext obj)

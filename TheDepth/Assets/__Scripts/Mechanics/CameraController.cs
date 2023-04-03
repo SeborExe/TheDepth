@@ -1,5 +1,8 @@
 using Cinemachine;
+using System;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Windows;
 
 public class CameraController : SingletonMonobehaviour<CameraController>
 {
@@ -13,7 +16,6 @@ public class CameraController : SingletonMonobehaviour<CameraController>
 
     private Vector2 vectorRotation;
     private float zoomValue;
-    private Transform currentFocusPoint;
 
     protected override void Awake()
     {
@@ -31,7 +33,7 @@ public class CameraController : SingletonMonobehaviour<CameraController>
     }
 
     private void Update()
-    {  
+    {   
         freeLookCamera.m_XAxis.Value = vectorRotation.x * gamepadRotateSpeed;
 
         if (zoomValue != 0)

@@ -42,7 +42,7 @@ public abstract class PlayerBaseState : State
         }
 
         stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(speed, deltaTime);
-        FaceMovementDirection(movement, deltaTime);
+        FaceMovementDirection(movement, deltaTime, slowDown);
     }
 
     protected Vector3 CalculateMovement()
@@ -60,9 +60,9 @@ public abstract class PlayerBaseState : State
             right * stateMachine.InputHandler.GetMovementVectorNormalized().x;
     }
 
-    protected void FaceMovementDirection(Vector3 movement, float deltaTime)
+    protected void FaceMovementDirection(Vector3 movement, float deltaTime, float slowDown = 1f)
     {
         stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation, Quaternion.LookRotation(movement),
-            deltaTime * stateMachine.RotationSpeed);
+            deltaTime * (stateMachine.RotationSpeed / slowDown));
     }
 }

@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class PlayerMoveState : PlayerBaseState
 {
-    private float slowdownWhenRoll = 10f;
-
     public PlayerMoveState(PlayerStateMachine stateMachine) : base(stateMachine)
     {
     }
@@ -23,6 +21,7 @@ public class PlayerMoveState : PlayerBaseState
         if (!stateMachine.PlayerAnimator.IsInteracting)
         {
             CheckForAttack();
+            CheckForAiming();
         }
 
         CheckFormMove(deltaTime);
@@ -44,35 +43,21 @@ public class PlayerMoveState : PlayerBaseState
 
     private void CheckForAttack()
     {
-        if (stateMachine.InputHandler.IsAttacking)
+        if (stateMachine.InputHandler.IsAttacking && !stateMachine.CurrentWeapon.isDistanceWeapon)
         {
             stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
             return;
         }
     }
 
-    private void CheckFormMove(float deltaTime)
+    private void CheckForAiming()
     {
-        Vector3 movement = CalculateMovement();
-        float speed = movement.magnitude * stateMachine.MovementSpeed;
-
-        if (stateMachine.PlayerAnimator.IsInteracting)
+        if (stateMachine.InputHandler.IsAiming && stateMachine.CurrentWeapon.isDistanceWeapon)
         {
-            movement /= slowdownWhenRoll;
-        }
-
-        Move(movement * stateMachine.MovementSpeed, deltaTime);
-
-        if (movement.magnitude == 0f)
-        {
-            stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(0f, deltaTime);
+            stateMachine.SwitchState(new PlayerAimingState(stateMachine));
             return;
         }
-
-        stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(speed, deltaTime);
-        FaceMovementDirection(movement, deltaTime);
     }
-
     
     private void Roll()
     {

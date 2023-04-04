@@ -9,8 +9,10 @@ public class InputHandler : MonoBehaviour
     private PlayerInputActions playerInputActions;
 
     public event Action OnRoll;
+    public event Action OnAttack;
 
     public bool IsAttacking { get; private set; }
+    public bool IsAiming { get; private set; }
 
     private void Awake()
     {
@@ -23,6 +25,10 @@ public class InputHandler : MonoBehaviour
 
         playerInputActions.Player.Attack.performed += Attack_performed;
         playerInputActions.Player.Attack.canceled += Attack_canceled;
+        playerInputActions.Player.Attack.started += Attack_started; ;
+
+        playerInputActions.Player.Aim.performed += Aim_performed;
+        playerInputActions.Player.Aim.canceled += Aim_canceled;
 
         playerInputActions.Player.Roll.started += Roll_started;
 
@@ -66,6 +72,11 @@ public class InputHandler : MonoBehaviour
         return playerInputActions.Player.Look.ReadValue<Vector2>();
     }
 
+    private void Attack_started(InputAction.CallbackContext obj)
+    {
+        OnAttack?.Invoke();
+    }
+
     private void Attack_performed(InputAction.CallbackContext obj)
     {
         IsAttacking = true;
@@ -74,6 +85,18 @@ public class InputHandler : MonoBehaviour
     private void Attack_canceled(InputAction.CallbackContext obj)
     {
         IsAttacking = false;
+    }
+
+    private void Aim_performed(InputAction.CallbackContext obj)
+    {
+        IsAiming = true;
+        AimCameraController.Instance.SetAim(true);
+    }
+
+    private void Aim_canceled(InputAction.CallbackContext obj)
+    {
+        IsAiming = false;
+        AimCameraController.Instance.SetAim(false);
     }
 
     private void Roll_started(InputAction.CallbackContext obj)

@@ -1,5 +1,8 @@
 using Cinemachine;
+using System;
 using UnityEngine;
+using UnityEngine.Animations;
+using UnityEngine.Windows;
 
 public class CameraController : SingletonMonobehaviour<CameraController>
 {
@@ -26,12 +29,11 @@ public class CameraController : SingletonMonobehaviour<CameraController>
 
     private void Start()
     {
-        freeLookCamera.Follow = Player.Instance.transform;
-        freeLookCamera.LookAt = Player.Instance.transform;
+        ChangeFocusPoint(Player.Instance.transform);
     }
 
     private void Update()
-    {  
+    {   
         freeLookCamera.m_XAxis.Value = vectorRotation.x * gamepadRotateSpeed;
 
         if (zoomValue != 0)
@@ -43,6 +45,12 @@ public class CameraController : SingletonMonobehaviour<CameraController>
     void LateUpdate()
     {
         transform.LookAt(2 * transform.position - freeLookCamera.transform.position);
+    }
+
+    public void ChangeFocusPoint(Transform focusPoint)
+    {
+        freeLookCamera.Follow = focusPoint;
+        freeLookCamera.LookAt = focusPoint;
     }
 
     public void SetVectorRotation(Vector2 vectorRotation)

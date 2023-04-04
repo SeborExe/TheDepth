@@ -43,7 +43,7 @@ public class PlayerMoveState : PlayerBaseState
 
     private void CheckForAttack()
     {
-        if (stateMachine.InputHandler.IsAttacking)
+        if (stateMachine.InputHandler.IsAttacking && !stateMachine.CurrentWeapon.isDistanceWeapon)
         {
             stateMachine.SwitchState(new PlayerAttackingState(stateMachine, 0));
             return;

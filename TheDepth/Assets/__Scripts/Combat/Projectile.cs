@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     private CinemachineImpulseSource source;
     private CapsuleCollider capsuleCollider;
     //private List<Collider> alreadyColliderWith = new List<Collider>();
+    private bool dealedDamage = false;
 
     private Collider myCollider;
     private float damage;
@@ -52,7 +53,7 @@ public class Projectile : MonoBehaviour
 
             //if (alreadyColliderWith.Contains(collision.collider)) { return; }
 
-            if (collision.gameObject.TryGetComponent(out Health health))
+            if (collision.gameObject.TryGetComponent(out Health health) && !dealedDamage)
             {
                 health.Dealdamage(damage, myCollider.gameObject, collision.collider.ClosestPoint(transform.position), hasImpact);
                 //alreadyColliderWith.Add(collision.collider);
@@ -67,6 +68,7 @@ public class Projectile : MonoBehaviour
             capsuleCollider.height = 0.1f;
             capsuleCollider.center = new Vector3(0, 0.03f, -0.06f);
 
+            dealedDamage = true;
             rigidbody.isKinematic = true;
             StartCoroutine(Countdown());
         }

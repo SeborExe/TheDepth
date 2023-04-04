@@ -10,6 +10,7 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     [field: Header("Stats")]
     [field: SerializeField] public float Experience { get; private set; } = 0;
     [field: SerializeField] public GameObject FollowTarget { get; private set; }
+    [field: SerializeField] public GameObject FireTransform { get; private set; }
 
     [Header("Prefabs")]
     [SerializeField] private GameObject particlesOnLevelUp;

@@ -179,8 +179,8 @@ GameObject:
   - component: {fileID: 1398175234702782425}
   - component: {fileID: -5822015906512641235}
   - component: {fileID: 8037025703338601862}
-  m_Layer: 0
-  m_Name: Arrow Projectile
+  m_Layer: 8
+  m_Name: Player_Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,7 +229,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.15
+  m_Radius: 0.2
   m_Height: 0.65
   m_Direction: 2
   m_Center: {x: 0, y: 0.03, z: -0.34}

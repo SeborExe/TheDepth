@@ -297,7 +297,7 @@ namespace PixelCrushers.DialogueSystem
                     {
                         CeltxGem3ToDialogueDatabase celtxProcessor = new CeltxGem3ToDialogueDatabase();
                         celtxProcessor.ProcessCeltxGem3DataObject(celtxDataObject, database, prefs.importGameplayAsEmptyNodes, prefs.importGameplayScriptText, prefs.importBreakdownCatalogContent, prefs.checkSequenceSyntax);
-                        database.actors.ForEach(a => FindPortraitTexture(a));
+                        database.actors.ForEach(a => FindPortraitTextures(a));
                         if (prefs.sortConversationTitles) database.conversations.Sort((x, y) => x.Title.CompareTo(y.Title));
                         SaveDatabase(database, databaseAssetName);
                         Debug.Log(string.Format("{0}: Created database '{1}' containing {2} actors, {3} conversations, {4} items (quests), {5} variables, and {6} locations.",
@@ -340,21 +340,43 @@ namespace PixelCrushers.DialogueSystem
             AssetDatabase.SaveAssets();
         }
 
-        private void FindPortraitTexture(Actor actor)
+        private void FindPortraitTextures(Actor actor)
+        {
+            if (actor == null) return;
+            var pictures = actor.LookupValue(CeltxFields.Pictures);
+            if (string.IsNullOrEmpty(pictures) || pictures.Length <= 2) 
+            {
+                FindPortraitTexture(actor, actor.Name, false);
+            }
+            var textureNames = pictures.Substring(1, pictures.Length - 2).Split(';');
+            foreach (var textureName in textureNames)
+            {
+                FindPortraitTexture(actor, textureName, true);
+            }
+        }
+
+        private void FindPortraitTexture(Actor actor, string textureName, bool reportIfNotFound)
         {
             try { 
                 if (actor == null) return;
-                string textureName = actor.textureName;
                 if (!string.IsNullOrEmpty(textureName))
                 {
-                    string filename = Path.GetFileName(textureName).Replace('\\', '/');
+                    string filename = Path.GetFileNameWithoutExtension(textureName).Replace('\\', '/');
                     string assetPath = string.Format("{0}/{1}", prefs.portraitFolder, filename);
-                    Texture2D texture = AssetDatabase.LoadAssetAtPath(assetPath, typeof(Texture2D)) as Texture2D;
-                    if (texture == null)
+                    Sprite sprite = EditorTools.TryLoadSprite(assetPath);
+                    if (sprite == null && reportIfNotFound)
                     {
-                        Debug.LogWarning(string.Format("{0}: Can't find portrait texture {1} for {2}.", DialogueDebug.Prefix, assetPath, actor.Name));
+                        Debug.LogWarning(string.Format("{0}: Can't find portrait sprite {1} for {2}.", DialogueDebug.Prefix, assetPath, actor.Name));
                     }
-                    actor.portrait = texture;
+                    if (actor.spritePortrait == null)
+                    {
+                        actor.spritePortrait = sprite;
+                    }
+                    else
+                    {
+                        if (actor.spritePortraits == null) actor.spritePortraits = new System.Collections.Generic.List<Sprite>();
+                        actor.spritePortraits.Add(sprite);
+                    }
                 }
             }
             catch (System.Exception e)

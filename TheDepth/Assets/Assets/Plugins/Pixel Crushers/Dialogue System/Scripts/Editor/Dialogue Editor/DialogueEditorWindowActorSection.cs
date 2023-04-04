@@ -288,8 +288,8 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             }
             else if (useDisplayNameField)
             {
-                EditTextField(actor.fields, "Display Name", "The name to show in UIs.", false);
-                DrawLocalizedVersions(actor.fields, "Display Name {0}", false, FieldType.Text);
+                DrawRevisableTextField(displayNameLabel, actor, null, actor.fields, "Display Name");
+                DrawLocalizedVersions(actor, actor.fields, "Display Name {0}", false, FieldType.Text);
             }
 
             // Portrait Textures:

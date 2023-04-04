@@ -115,6 +115,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             {
                 AddNewConversationToNodeEditor();
             }
+            DrawAIGenerateConversationButton();
             DrawNextConversationButton();
             DrawConversationFilter();
             DrawZoomSlider();

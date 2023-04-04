@@ -218,8 +218,46 @@ namespace PixelCrushers.DialogueSystem.Celtx
 #endif
                     }
                 }
+                AppendToField(actor.fields, CeltxFields.Pictures, GetPictureString(characterData), FieldType.Files);
                 actorLookupViaCeltxId[(string)characterData.id] = actor;
             }
+        }
+
+        private string GetPictureString(dynamic catalogItemAttrs)
+        {
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("[");
+                if (catalogItemAttrs.item_data.media != null && catalogItemAttrs.item_data.media.Count > 0)
+                {
+                    var mediaCount = catalogItemAttrs.item_data.media.Count;
+                    for (int i = 0; i < mediaCount; i++)
+                    {
+                        var media = catalogItemAttrs.item_data.media[i];
+                        stringBuilder.Append(media.name);
+
+                        if (i == mediaCount - 1)
+                        {
+                            stringBuilder.Append("]");
+                        }
+                        else
+                        {
+                            stringBuilder.Append(";");
+                        }
+                    }
+                    return stringBuilder.ToString();
+                }
+                else
+                {
+                    return "[]";
+                }
+            }
+            catch (System.Exception e)
+            {
+                LogError(MethodBase.GetCurrentMethod(), e, catalogItemAttrs.id, catalogItemAttrs.title);
+            }
+            return "[]";
         }
 
         private void GenerateLocationsFromCatalog()
@@ -775,10 +813,19 @@ namespace PixelCrushers.DialogueSystem.Celtx
                 var edgeData = edgeObject.Value;
                 var to = (string)edgeData.to;
                 var from = (string)edgeData.from;
-                var conditionId = (string)edgeData.condition;
+                var conditionId = (edgeData.condition.GetType() == typeof(string)) ? (string)edgeData.condition : null;
 
-                var toDialogueObject = dialogueEntryToDict[to];
-                var fromDialogueObject = dialogueEntryFromDict[from];
+                DialogueEntry toDialogueObject, fromDialogueObject;
+                if (!dialogueEntryToDict.TryGetValue(to, out toDialogueObject))
+                {
+                    Debug.LogWarning($"LinkDialogueEntriesFromEdges cannot locate destination entry {to}.");
+                    continue;
+                }
+                if (!dialogueEntryFromDict.TryGetValue(from, out fromDialogueObject))
+                {
+                    Debug.LogWarning($"LinkDialogueEntriesFromEdges cannot locate origin entry {from}.");
+                    continue;
+                }
 
                 LinkDialogueEntries(fromDialogueObject, toDialogueObject, conditionId);
             }
@@ -827,7 +874,7 @@ namespace PixelCrushers.DialogueSystem.Celtx
                               firstText.StartsWith("[SCRIPT]", System.StringComparison.OrdinalIgnoreCase)))
                         {
                             entryCount++;
-                            DialogueEntry newEntry = CreateNextDialogueEntryForConversation(conversation, string.Empty, (string)contentObject.attrs.id, true);
+                            DialogueEntry newEntry = CreateNextDialogueEntryForConversation(conversation, string.Empty, (string)contentObject.attrs.id, true);                            
                             newEntry.ActorID = currentEntry.ActorID;
                             newEntry.ConversantID = currentEntry.ConversantID;
                             newEntry.Title = GetContentText(contentObject, currentEntry, null);
@@ -1057,11 +1104,14 @@ namespace PixelCrushers.DialogueSystem.Celtx
         {
             StringBuilder stringBuilder = new StringBuilder();
 
-            foreach (var subContentObject in contentObject.content)
+            if (contentObject != null && contentObject.content != null)
             {
-                if (GetContentType(subContentObject).Equals("text"))
+                foreach (var subContentObject in contentObject.content)
                 {
-                    stringBuilder.Append(GetMarkedText(subContentObject, currentEntry, breakdownEntry));
+                    if (GetContentType(subContentObject).Equals("text"))
+                    {
+                        stringBuilder.Append(GetMarkedText(subContentObject, currentEntry, breakdownEntry));
+                    }
                 }
             }
 
@@ -1335,43 +1385,6 @@ namespace PixelCrushers.DialogueSystem.Celtx
         //        LogError(MethodBase.GetCurrentMethod(), e, characterAttrs.id, characterAttrs.title);
         //    }
         //    return false;
-        //}
-
-        //TODO: Waiting on CeltX team 
-        //                AppendToField(actor.fields, CeltxFields.Pictures, getPictureString(catalogItemAttrs), FieldType.Files);
-        //private string getPictureString(CxAttrs catalogItemAttrs)
-        //{
-        //    try
-        //    {
-        //        StringBuilder stringBuilder = new StringBuilder();
-        //        stringBuilder.Append("[");
-        //        if (catalogItemAttrs.item_data.media != null && catalogItemAttrs.item_data.media.Count > 0)
-        //        {
-        //            foreach (CxMedia media in catalogItemAttrs.item_data.media)
-        //            {
-        //                stringBuilder.Append(media.name);
-
-        //                if (media.Equals(catalogItemAttrs.item_data.media.Last()))
-        //                {
-        //                    stringBuilder.Append("]");
-        //                }
-        //                else
-        //                {
-        //                    stringBuilder.Append(";");
-        //                }
-        //            }
-        //            return stringBuilder.ToString();
-        //        }
-        //        else
-        //        {
-        //            return "[]";
-        //        }
-        //    }
-        //    catch (System.Exception e)
-        //    {
-        //        LogError(MethodBase.GetCurrentMethod(), e, catalogItemAttrs.id, catalogItemAttrs.title);
-        //    }
-        //    return "[]";
         //}
 #endregion
     }

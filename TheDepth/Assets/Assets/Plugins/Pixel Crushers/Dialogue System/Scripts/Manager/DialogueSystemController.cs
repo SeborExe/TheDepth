@@ -2070,6 +2070,9 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("GetEntryNumber", null, SymbolExtensions.GetMethodInfo(() => GetEntryNumber((double)0, string.Empty)));
             Lua.RegisterFunction("Conditional", null, SymbolExtensions.GetMethodInfo(() => Conditional(false, string.Empty)));
             Lua.RegisterFunction("ChangeActorName", this, SymbolExtensions.GetMethodInfo(() => ChangeActorName(string.Empty, string.Empty)));
+            Lua.RegisterFunction("ActorIDToName", this, SymbolExtensions.GetMethodInfo(() => ActorIDToName(0)));
+            Lua.RegisterFunction("ItemIDToName", this, SymbolExtensions.GetMethodInfo(() => ItemIDToName(0)));
+            Lua.RegisterFunction("QuestIDToName", this, SymbolExtensions.GetMethodInfo(() => ItemIDToName(0)));
             // Register DialogueLua in case they got unregistered:
             DialogueLua.RegisterLuaFunctions();
         }
@@ -2085,6 +2088,9 @@ namespace PixelCrushers.DialogueSystem
             Lua.UnregisterFunction("GetEntryNumber");
             Lua.UnregisterFunction("Conditional");
             Lua.UnregisterFunction("ChangeActorName");
+            Lua.UnregisterFunction("ActorIDToName");
+            Lua.UnregisterFunction("ItemIDToName");
+            Lua.UnregisterFunction("QuestIDToName");
         }
 
         public void SendUpdateTracker()
@@ -2157,6 +2163,17 @@ namespace PixelCrushers.DialogueSystem
             }
         }
 
+        public static string ActorIDToName(double id)
+        {
+            var asset = DialogueManager.masterDatabase.GetActor((int)id);
+            return (asset != null) ? asset.Name : null;
+        }
+
+        public static string ItemIDToName(double id)
+        {
+            var asset = DialogueManager.masterDatabase.GetItem((int)id);
+            return (asset != null) ? asset.Name : null;
+        }
 
         /// <summary>
         /// Adds a Lua expression observer.
@@ -2481,7 +2498,7 @@ namespace PixelCrushers.DialogueSystem
             Destroy(watermark.GetComponent<UnityEngine.UI.CanvasScaler>());
             var text = watermark.AddComponent<UnityEngine.UI.Text>();
             text.text = "Dialogue System\nEvaluation Version";
-            text.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+            text.font = UIUtility.GetDefaultFont();
             text.fontSize = 24;
             text.fontStyle = FontStyle.Bold;
             text.color = new Color(1, 1, 1, 0.75f);

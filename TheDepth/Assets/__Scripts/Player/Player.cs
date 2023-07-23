@@ -15,6 +15,8 @@ public class Player : SingletonMonobehaviour<Player>, ISaveable
     [Header("Prefabs")]
     [SerializeField] private GameObject particlesOnLevelUp;
 
+    public bool IsInDialogue { get; set; }
+
     private BaseStats baseStats;
     private Health health;
 

@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 5655154949207114415}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &637450646
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 637450647}
+  m_Layer: 0
+  m_Name: FireTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &637450647
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 637450646}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -13.4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5655154949207134207}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &1787780797
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +88,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787780797}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 1.538, z: 0.158}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -250,6 +281,8 @@ GameObject:
   - component: {fileID: 9152087188537198680}
   - component: {fileID: -7739664274766071814}
   - component: {fileID: 2117433370}
+  - component: {fileID: 986509323}
+  - component: {fileID: 986509324}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -400,6 +433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Experience>k__BackingField: 0
+  <FollowTarget>k__BackingField: {fileID: 1787780797}
+  <FireTransform>k__BackingField: {fileID: 637450646}
   particlesOnLevelUp: {fileID: 1624714524768532, guid: c9eb15264aa6c4348b00d5b9b3daab2a,
     type: 3}
 --- !u!114 &2992686034631846478
@@ -445,7 +480,7 @@ MonoBehaviour:
   <PreviousDodgeTime>k__BackingField: -Infinity
   <DodgeCoolDown>k__BackingField: 2
   <TimeWhilePlayerIsAbleToRotate>k__BackingField: 0.8
-  <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: d6cec391f9e2d714ab8d18c0bd967433,
+  <CurrentWeapon>k__BackingField: {fileID: 11400000, guid: 3dda7483c928ddd43bed82a319c86a94,
     type: 2}
   <WeaponLogic>k__BackingField: {fileID: 1910176880}
   <WeaponTransform>k__BackingField: {fileID: 394138205}
@@ -509,11 +544,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followTransform: {fileID: 1787780797}
-  nextPosition: {x: 0, y: 0, z: 0}
-  nextRotation: {x: 0, y: 0, z: 0, w: 0}
   rotationPower: 3
   rotationLerp: 0.5
   speed: 1
+--- !u!114 &986509323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154948495891506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963d6358c55a0f44d8de57bee560f184, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useDefaultGUI: 1
+  guiSkin: {fileID: 0}
+  guiStyleName: label
+  alignment: 1
+  color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  textStyle: 1
+  textStyleColor: {r: 0, g: 0, b: 0, a: 1}
+  defaultUseMessage: (X to Interact)
+  useKey: 32
+  useButton: Fire2
+  enableTouch: 0
+  touchArea:
+    origin: 0
+    alignment: 0
+    x:
+      scale: 0
+      value: 0
+    y:
+      scale: 0
+      value: 0
+    width:
+      scale: 0
+      value: 0
+    height:
+      scale: 0
+      value: 0
+    minPixelWidth: 0
+    minPixelHeight: 0
+  broadcastToChildren: 1
+  actorTransform: {fileID: 0}
+  onSelectedUsable:
+    m_PersistentCalls:
+      m_Calls: []
+  onDeselectedUsable:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!135 &986509324
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5655154948495891506}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 1, z: 0.8}
 --- !u!1 &5655154949207412903
 GameObject:
   m_ObjectHideFlags: 0
@@ -2853,6 +2947,7 @@ Transform:
   - {fileID: 5655154949207186921}
   - {fileID: 5655154949207189607}
   - {fileID: 2099470545}
+  - {fileID: 637450647}
   m_Father: {fileID: 5655154949207137581}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

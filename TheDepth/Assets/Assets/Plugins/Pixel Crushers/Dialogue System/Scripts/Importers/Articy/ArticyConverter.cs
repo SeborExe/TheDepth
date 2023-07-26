@@ -1489,7 +1489,7 @@ namespace PixelCrushers.DialogueSystem.Articy
             if (expression.Contains("Variable[")) return expression;
 
             // Convert comments:
-            string s = expression.Trim().Replace("//", "--");
+            string s = expression.Trim().Replace("///", "").Replace("//", "--");
 
             // Convert random to math.random:
             s = s.Replace("random(", "math.random(").Replace("random (", "math.random(");
@@ -1518,7 +1518,13 @@ namespace PixelCrushers.DialogueSystem.Articy
             }
 
             // Convert negation (!) to "==false":
-            s = s.Replace("!Variable", "false == Variable");
+            s = s.Replace("!Variable", "not Variable");
+            s = s.Replace("!(", "not (");
+            const string negatedFunctionPattern = @"!\b(_\w+|[\w-[0-9_]]\w*)\b";
+            s = Regex.Replace(s, negatedFunctionPattern, (match) =>
+            {
+                return "not " + match.Value.Substring(1);
+            });
 
             // Convert arithmetic assignment operators (e.g., +=):
             if (ContainsArithmeticAssignment(s))

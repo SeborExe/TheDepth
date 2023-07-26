@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         this.hasImpact = hasImpact;
         this.force = force;
 
-        rigidbody.AddForce(transform.forward * (100 * Random.Range(1.3f, 1.7f) * force), ForceMode.Impulse);
+        rigidbody.AddForce(transform.forward * (70 * Random.Range(1.1f, 1.7f) * force), ForceMode.Impulse);
         source = GetComponent<CinemachineImpulseSource>();
 
         source.GenerateImpulse(Camera.main.transform.forward);
@@ -51,12 +51,25 @@ public class Projectile : MonoBehaviour
         {
             if (collision.collider == myCollider) { return; }
 
-            //if (alreadyColliderWith.Contains(collision.collider)) { return; }
+            //Make Collider smaller 
+            capsuleCollider.height = 0.1f;
+            capsuleCollider.center = new Vector3(0, 0.03f, -0.06f);
+
+            //dealedDamage = true;
+            rigidbody.isKinematic = true;
+            StartCoroutine(Countdown());
+        }
+    }
+
+    public void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.name != "Player")
+        {
+            if (collision == myCollider) { return; }
 
             if (collision.gameObject.TryGetComponent(out Health health) && !dealedDamage)
             {
-                health.Dealdamage(damage, myCollider.gameObject, collision.collider.ClosestPoint(transform.position), hasImpact);
-                //alreadyColliderWith.Add(collision.collider);
+                health.Dealdamage(damage, myCollider.gameObject, collision.ClosestPoint(transform.position), hasImpact);
             }
 
             if (collision.gameObject.TryGetComponent(out ForceReciver forceReciver))
@@ -64,15 +77,8 @@ public class Projectile : MonoBehaviour
                 forceReciver.AddForce((collision.transform.position - myCollider.transform.position).normalized * knockback);
             }
 
-            //Make Collider smaller 
-            capsuleCollider.height = 0.1f;
-            capsuleCollider.center = new Vector3(0, 0.03f, -0.06f);
-
             dealedDamage = true;
-            rigidbody.isKinematic = true;
-            StartCoroutine(Countdown());
         }
-
     }
 
     IEnumerator Countdown()

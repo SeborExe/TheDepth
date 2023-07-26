@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 6785743527752628528}
   - component: {fileID: 6785743527752628534}
   - component: {fileID: 6785743527752628535}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -408,7 +408,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6785743527752628494}
-  m_LocalRotation: {x: -0, y: 0.2817235, z: -0, w: 0.95949566}
+  m_LocalRotation: {x: 0, y: 0.28172186, z: 0, w: 0.95949614}
   m_LocalPosition: {x: 9.674528, y: 1.283, z: -7.5062985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -524,6 +524,7 @@ MonoBehaviour:
   <PlayerDetectionRange>k__BackingField: 8
   <MinDetectionAngle>k__BackingField: -70
   <MaxDetectionAngle>k__BackingField: 70
+  <DetectionRangeMultiplierWhenEnemySawPlayer>k__BackingField: 2.5
   <PatrolPath>k__BackingField: {fileID: 0}
   <PercentSpeedWhenBackToPosition>k__BackingField: 0.25
   <TimeInSuspiciousState>k__BackingField: 5

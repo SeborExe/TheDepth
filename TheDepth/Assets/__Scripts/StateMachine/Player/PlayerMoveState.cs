@@ -18,6 +18,12 @@ public class PlayerMoveState : PlayerBaseState
 
     public override void Tick(float deltaTime)
     {
+        if (stateMachine.Player.IsInDialogue)
+        {
+            stateMachine.PlayerAnimator.UpdatePlayerMoveAnimation(0, deltaTime);
+            return;
+        }
+
         if (!stateMachine.PlayerAnimator.IsInteracting)
         {
             CheckForAttack();

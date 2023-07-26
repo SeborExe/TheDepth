@@ -28,6 +28,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             public bool export = false;
             public bool localization = false;
             public bool editorSettings = false;
+            public bool AI = false;
         }
 
         [SerializeField]
@@ -127,6 +128,7 @@ namespace PixelCrushers.DialogueSystem.DialogueEditor
             if (databaseFoldouts.export) DrawExportSection();
             databaseFoldouts.localization = EditorGUILayout.Foldout(databaseFoldouts.localization, new GUIContent("Localization Export/Import", "Options to export and import localization files."));
             if (databaseFoldouts.localization) DrawLocalizationSection();
+            databaseFoldouts.AI = DrawAIDatabaseFoldout(databaseFoldouts.AI);
             databaseFoldouts.editorSettings = EditorGUILayout.Foldout(databaseFoldouts.editorSettings, new GUIContent("Editor Settings", "Editor settings."));
             if (databaseFoldouts.editorSettings) DrawEditorSettings();
         }

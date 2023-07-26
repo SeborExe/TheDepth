@@ -89,16 +89,22 @@ namespace PixelCrushers.DialogueSystem
 
         public virtual void OnSelectUsable()
         {
+            NPCInfoPanelUI.Instance.Initialize($"{overrideName} \n (X to interact)");
+
             if (events != null && events.onSelect != null) events.onSelect.Invoke();
         }
 
         public virtual void OnDeselectUsable()
         {
+            NPCInfoPanelUI.Instance.gameObject.SetActive(false);
+
             if (events != null && events.onDeselect != null) events.onDeselect.Invoke();
         }
 
         public virtual void OnUseUsable()
         {
+            NPCInfoPanelUI.Instance.gameObject.SetActive(false);
+
             if (events != null && events.onUse != null) events.onUse.Invoke();
         }
 

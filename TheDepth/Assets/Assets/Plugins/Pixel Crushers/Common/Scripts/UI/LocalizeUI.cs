@@ -105,12 +105,11 @@ namespace PixelCrushers
 
         protected virtual void OnEnable()
         {
-            UpdateText();
+            if (started) UpdateText();
         }
 
         public virtual void UpdateText()
         {
-            if (!started) return;
             var language = (UILocalizationManager.instance != null) ? UILocalizationManager.instance.currentLanguage : string.Empty;
 
             // Skip if no text table or language set:

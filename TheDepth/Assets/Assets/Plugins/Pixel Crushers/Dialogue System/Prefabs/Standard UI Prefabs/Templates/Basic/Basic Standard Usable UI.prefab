@@ -345,7 +345,7 @@ MonoBehaviour:
     m_uiText: {fileID: 11431260}
   useMessageText:
     m_uiText: {fileID: 11448760}
-  inRangeColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  inRangeColor: {r: 1, g: 0.92156863, b: 0.015686274, a: 1}
   outOfRangeColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   reticleInRange: {fileID: 11446072}
   reticleOutOfRange: {fileID: 11472206}

@@ -118,7 +118,6 @@ namespace PixelCrushers.DialogueSystem
 
         protected virtual IEnumerator Start()
         {
-            yield return null;
             if (enabled)
             {
                 if (DialogueDebug.logInfo) Debug.Log("Dialogue System: " + name + ": Listening for state changes to quest '" + questName + "'.", this);
@@ -131,6 +130,7 @@ namespace PixelCrushers.DialogueSystem
                 {
                     questStateDispatcher.AddListener(this);
                 }
+                yield return null;
                 m_suppressOnEnterStateEvent = suppressOnEnterStateEventsOnStart;
                 UpdateIndicator();
                 m_suppressOnEnterStateEvent = false;

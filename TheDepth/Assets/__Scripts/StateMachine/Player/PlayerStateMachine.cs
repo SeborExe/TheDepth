@@ -107,7 +107,7 @@ public class PlayerStateMachine : StateMachine, ISaveable
     {
         Projectile projectile = Instantiate(CurrentWeapon.projectileSO.projectile);
         projectile.transform.forward = Player.FollowTarget.transform.forward;
-        projectile.transform.position = Player.FollowTarget.transform.position + Player.FollowTarget.transform.forward;
+        projectile.transform.position = Player.FireTransform.transform.position + Player.FireTransform.transform.forward;
 
         yield return new WaitForSeconds(0.1f);
 

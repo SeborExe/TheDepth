@@ -15,25 +15,25 @@ namespace PixelCrushers.Wrappers
         protected override void OnEnable()
         {
             OnStatDialogue();
+            base.OnEnable();
         }
 
         protected override void OnDisable()
         {
             OnEndDialogue();
+            base.OnDisable();
         }
 
         private void OnStatDialogue()
         {
             MainGameCanvas.Instance.PlayerStatsDisplay.gameObject.SetActive(false);
             Player.Instance.IsInDialogue = true;
-            Debug.Log("On Dialogue START");
         }
 
         private void OnEndDialogue()
         {
             MainGameCanvas.Instance.PlayerStatsDisplay.gameObject.SetActive(true);
             Player.Instance.IsInDialogue = false;
-            Debug.Log("On Dialogue END");
         }
     }
 

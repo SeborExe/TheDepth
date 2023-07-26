@@ -472,9 +472,11 @@ namespace PixelCrushers.DialogueSystem
             }
             if (currentUsable != null)
             {
-                GUI.skin = guiSkin;
-                UnityGUITools.DrawText(new Rect(0, 0, Screen.width, Screen.height), currentHeading, guiStyle, textStyle, textStyleColor);
-                UnityGUITools.DrawText(new Rect(0, guiStyleLineHeight, Screen.width, Screen.height), currentUseMessage, guiStyle, textStyle, textStyleColor);
+                //Wyrysowanie tekstu na górze ekranu przy podejsciu do NPC
+
+                //GUI.skin = guiSkin;
+                //UnityGUITools.DrawText(new Rect(0, 0, Screen.width, Screen.height), currentHeading, guiStyle, textStyle, textStyleColor);
+                //UnityGUITools.DrawText(new Rect(0, guiStyleLineHeight, Screen.width, Screen.height), currentUseMessage, guiStyle, textStyle, textStyleColor);
             }
         }
 

@@ -14,6 +14,8 @@ public class EnemyChasingState : EnemyBaseState
     {
         stateMachine.SetCurrentState(this);
         stateMachine.EnemyAnimator.CrossFadeAnimation(stateMachine.Animator, stateMachine.EnemyAnimator.LOCOMOTION_TREE, animationSmoothCrossFade);
+
+        stateMachine.ChangePlayerDetectionRange(stateMachine.PlayerDetectionRange * stateMachine.DetectionRangeMultiplierWhenEnemySawPlayer);
     }
 
     public override void Tick(float deltaTime)
@@ -44,6 +46,8 @@ public class EnemyChasingState : EnemyBaseState
             stateMachine.NavMeshAgent.ResetPath();
             stateMachine.NavMeshAgent.velocity = Vector3.zero;
         }
+
+        stateMachine.ResetDetectionRange();
     }
 
     private void MoveToPlayer(float deltaTime)

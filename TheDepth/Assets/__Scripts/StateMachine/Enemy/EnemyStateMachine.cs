@@ -29,6 +29,7 @@ public class EnemyStateMachine : StateMachine, ISaveable
     [field: SerializeField] public float PlayerDetectionRange { get; private set; }
     [field: SerializeField] public float MinDetectionAngle { get; private set; }
     [field: SerializeField] public float MaxDetectionAngle { get; private set; }
+    [field: SerializeField] public float DetectionRangeMultiplierWhenEnemySawPlayer { get; private set; }
     public Health Player { get; private set; }
 
     [field: Header("Suspicious and Patroling")]
@@ -48,6 +49,8 @@ public class EnemyStateMachine : StateMachine, ISaveable
     [field: Header("Damaged")]
     [field: SerializeField] public Transform Ragdoll { get; private set; }
 
+    private float defaultDetectionRange;
+
     private void Awake()
     {
         Animator = GetComponentInChildren<Animator>();
@@ -57,6 +60,8 @@ public class EnemyStateMachine : StateMachine, ISaveable
         Health = GetComponent<Health>();
         EnemyAnimator = GetComponentInChildren<EnemyAnimator>();
         BaseStats = GetComponent<BaseStats>();
+
+        defaultDetectionRange = PlayerDetectionRange;
     }
 
     private void Start()
@@ -166,4 +171,8 @@ public class EnemyStateMachine : StateMachine, ISaveable
         NavMeshAgent.enabled = true;
         CharacterController.enabled = true;
     }
+
+    public void ChangePlayerDetectionRange(float detectionRange) => PlayerDetectionRange = detectionRange;
+
+    public void ResetDetectionRange() => PlayerDetectionRange = defaultDetectionRange;
 }

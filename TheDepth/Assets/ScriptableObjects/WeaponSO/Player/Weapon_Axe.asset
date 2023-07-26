@@ -15,8 +15,8 @@ MonoBehaviour:
   weaponPrefab: {fileID: 11400000, guid: 79227c8d10e7048419d3b4a175daea77, type: 2}
   isDistanceWeapon: 0
   isRightHanded: 1
-  minDamage: 5
-  maxDamage: 9
+  minDamage: 3
+  maxDamage: 8
   animatorOverride: {fileID: 22100000, guid: dc60b11380531414a9ed43a981f437d2, type: 2}
   attack:
   - {fileID: 11400000, guid: a74c802e1a66ec84d99374ff91feb624, type: 2}
